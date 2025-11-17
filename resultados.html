@@ -210,10 +210,22 @@
       grid-template-columns:1fr;
       gap:16px;
     }
+    .index{
+      order:2;
+    }
+    main.content{
+      order:1;
+    }
     @media (min-width:1024px){
       .stack{
         grid-template-columns:minmax(0,320px) minmax(0,1fr);
         align-items:flex-start;
+      }
+      .index{
+        order:0;
+      }
+      main.content{
+        order:0;
       }
     }
 
@@ -327,11 +339,9 @@
       summary.idx-toggle{
         display:none;
       }
-      details.idx[open] .idx-toggle{
-        border-bottom:1px solid var(--line);
-      }
       .index-inner{
         padding:14px 12px;
+        display:block !important;
       }
     }
 
@@ -464,7 +474,11 @@
     }
 
     /* ============ Anclas accesibles ============ */
-    [id]{scroll-margin-top:calc(var(--headerH) + 10px)}
+    [id]{scroll-margin-top:calc(var(--headerH) + 70px)}
+
+    @media (min-width:1024px){
+      [id]{scroll-margin-top:calc(var(--headerH) + 20px)}
+    }
 
     /* ============ Botón "Arriba" ============ */
     .to-top{
@@ -718,6 +732,22 @@
   </div>
 
   <a href="#top" class="to-top" aria-label="Volver arriba">↑</a>
+
+  <script>
+    // Cerrar índice en mobile por defecto
+    function handleIndexOnMobile(){
+      const indexDetails = document.querySelector('.idx');
+      if(indexDetails){
+        if(window.innerWidth < 1024){
+          indexDetails.removeAttribute('open');
+        } else {
+          indexDetails.setAttribute('open', '');
+        }
+      }
+    }
+    handleIndexOnMobile();
+    window.addEventListener('resize', handleIndexOnMobile);
+  </script>
 
 </body>
 </html>
