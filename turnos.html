@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sacar turno — Diagnosticar</title>
+  <meta name="description" content="Sacar turno en Diagnosticar. Turnos online, por WhatsApp o teléfono para guardia, estudios por imágenes y laboratorio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============ Tokens ============ */
+    :root{
+      --ink:#0b1620;
+      --muted:#6b7b8c;
+      --brand:#0b3d91;
+      --line:#e6eaf2;
+      --card:#f7f9fc;
+      --bg:#ffffff;
+      --radius:14px;
+      --pad:16px;
+      --headerH:72px;
+      --tap:48px;
+      --fs-body:clamp(15px, 1.6vw, 17px);
+      --fs-h2:clamp(18px, 2.4vw, 22px);
+      --fs-h3:clamp(16px, 2.0vw, 18px);
+      --fs-small:clamp(12px, 1.4vw, 13px);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.6;
+      font-size:var(--fs-body);
+    }
+    a{color:inherit;text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* ============ Header ============ */
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:linear-gradient(120deg, var(--brand), #072c6a);
+      color:#fff;
+      border-bottom:1px solid #002b6b;
+    }
+    header .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:12px var(--pad);
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .brand{
+      min-width:0;
+      flex:1 1 auto;
+    }
+    .brand h1{
+      margin:0;
+      font-size:clamp(18px, 3.5vw, 24px);
+      font-weight:600;
+      color:#fff;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height:var(--tap);
+      padding:0 18px;
+      border-radius:999px;
+      border:1px solid transparent;
+      font-size:14px;
+      font-weight:600;
+      white-space:nowrap;
+      cursor:pointer;
+      text-decoration:none;
+      transition:transform .08s ease, box-shadow .08s ease, background .15s ease;
+      box-shadow:0 4px 12px rgba(0,0,0,.18);
+    }
+    .btn:focus-visible{
+      outline:3px solid #bcd1ff;
+      outline-offset:2px;
+    }
+    .btn-primary{
+      background:#ffffff;
+      color:var(--brand);
+      border-color:#ffffff;
+    }
+    .btn-primary:hover{
+      background:#e9efff;
+      text-decoration:none;
+    }
+    .btn-wa{
+      background:#25d366;
+      color:#ffffff;
+      border-color:#1da955;
+    }
+    .btn-wa:hover{
+      background:#1da955;
+      text-decoration:none;
+    }
+    .btn-wa-icon{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:22px;
+      height:22px;
+      border-radius:999px;
+      background:#ffffff;
+      color:#25d366;
+      font-size:14px;
+      margin-right:6px;
+      flex-shrink:0;
+    }
+
+    @media (max-width:600px){
+      header .wrap{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .cta-row{
+        justify-content:flex-start;
+      }
+    }
+
+    /* ============ Guardia Info Bar ============ */
+    .guardia-info-bar{
+      background:linear-gradient(120deg, #0a2f70 0%, #061e4d 100%);
+      color:#fff;
+      border-bottom:1px solid #001a3e;
+      padding:12px var(--pad);
+    }
+    .guardia-info-bar .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .guardia-info-text{
+      font-size:var(--fs-small);
+      opacity:.95;
+      flex:1 1 auto;
+    }
+    .guardia-info-text strong{
+      display:block;
+      margin-bottom:2px;
+      font-weight:600;
+      color:#e0e7ff;
+    }
+    .guardia-info-text .horario{
+      font-weight:600;
+      color:#90caf9;
+    }
+    
+    @media (max-width:600px){
+      .guardia-info-bar .wrap{
+        flex-direction:column;
+        gap:8px;
+      }
+      .guardia-info-text{
+        text-align:center;
+      }
+      .guardia-info-text strong{
+        display:inline;
+        margin:0;
+      }
+      .guardia-info-text strong::after{
+        content:" · ";
+        margin:0 6px;
+      }
+    }
+
+    /* ============ Layout ============ */
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:var(--pad);
+    }
+    .stack{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+    @media (min-width:1024px){
+      .stack{
+        grid-template-columns:minmax(0,320px) minmax(0,1fr);
+        align-items:flex-start;
+      }
+    }
+
+    /* ============ Índice ============ */
+    .index{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+    }
+    details.idx{
+      border-radius:inherit;
+      overflow:hidden;
+    }
+    summary.idx-toggle{
+      list-style:none;
+      padding:12px 14px;
+      font-weight:600;
+      font-size:var(--fs-small);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      cursor:pointer;
+      background:linear-gradient(135deg, var(--brand), #072c6a);
+      color:#fff;
+      border-radius:14px 14px 0 0;
+      transition:background .15s ease;
+    }
+    summary.idx-toggle:hover{
+      background:linear-gradient(135deg, #072c6a, #051a47);
+    }
+    summary.idx-toggle::-webkit-details-marker{display:none}
+    .chip{
+      font-size:var(--fs-small);
+      color:#fff;
+      background:rgba(255,255,255,.25);
+      border-radius:999px;
+      padding:4px 10px;
+      border:1px solid rgba(255,255,255,.4);
+    }
+    .index-inner{
+      padding:14px 12px 14px;
+      background:#fafbfc;
+    }
+    .index h2{
+      font-size:var(--fs-h2);
+      color:var(--brand);
+      margin:0 0 10px;
+    }
+    ol.h1,
+    ol.h2{
+      list-style:none;
+      margin:0;
+      padding-left:0;
+    }
+    .h1>li{
+      margin:10px 0;
+    }
+    .h2{
+      margin-top:6px;
+      padding-left:0;
+      border-left:none;
+    }
+    .h2>li{
+      margin:6px 0;
+    }
+
+    a.title{
+      display:block;
+      padding:10px 12px;
+      border-radius:8px;
+      font-size:var(--fs-body);
+      color:var(--ink);
+      border:1.5px solid transparent;
+      transition:all .12s ease;
+      font-weight:500;
+      background:#ffffff;
+      border-color:var(--line);
+    }
+    a.title:hover{
+      background:linear-gradient(135deg, var(--brand), #072c6a);
+      color:#fff;
+      border-color:var(--brand);
+      transform:translateX(4px);
+      text-decoration:none;
+      box-shadow:0 2px 8px rgba(11, 61, 145, .15);
+    }
+    a.title:active{
+      transform:translateX(2px);
+    }
+
+    @media (min-width:1024px){
+      .index{
+        position:sticky;
+        top:calc(var(--headerH) + 12px);
+        max-height:calc(100vh - var(--headerH) - 24px);
+        overflow:auto;
+      }
+      .index::-webkit-scrollbar{
+        width:8px;
+      }
+      .index::-webkit-scrollbar-track{
+        background:transparent;
+      }
+      .index::-webkit-scrollbar-thumb{
+        background:var(--brand);
+        border-radius:4px;
+      }
+      .index::-webkit-scrollbar-thumb:hover{
+        background:#072c6a;
+      }
+      summary.idx-toggle{
+        display:none;
+      }
+      details.idx[open] .idx-toggle{
+        border-bottom:1px solid var(--line);
+      }
+      .index-inner{
+        padding:14px 12px;
+      }
+    }
+
+    /* ============ Contenido ============ */
+    main.content{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    main.content section{
+      background:#ffffff;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:18px;
+    }
+    h1{
+      font-size:clamp(24px, 4vw, 32px);
+      color:var(--brand);
+      margin:0 0 12px;
+    }
+    h2{
+      font-size:var(--fs-h2);
+      color:var(--brand);
+      margin:20px 0 12px 0;
+    }
+    h3{
+      font-size:var(--fs-h3);
+      margin:14px 0 8px;
+    }
+    .meta{
+      color:var(--muted);
+      font-size:var(--fs-small);
+      margin-bottom:20px;
+    }
+    p{margin:0 0 12px}
+    ul{
+      margin:12px 0 12px 24px;
+      padding-left:0;
+    }
+    li{margin:8px 0}
+
+    /* ============ Card de opciones ============ */
+    .options-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+      margin:24px 0;
+    }
+    @media (min-width:768px){
+      .options-grid{
+        grid-template-columns:repeat(2, 1fr);
+      }
+    }
+    @media (min-width:1024px){
+      .options-grid{
+        grid-template-columns:repeat(3, 1fr);
+      }
+    }
+    .option-card{
+      display:flex;
+      flex-direction:column;
+      padding:24px;
+      background:linear-gradient(135deg, #f0f4ff 0%, #e3ecff 100%);
+      border:2px solid var(--brand);
+      border-radius:var(--radius);
+      box-shadow:0 2px 8px rgba(11, 61, 145, .1);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .option-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 4px 16px rgba(11, 61, 145, .15);
+    }
+    .option-icon{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:56px;
+      height:56px;
+      border-radius:12px;
+      background:linear-gradient(135deg, var(--brand), #072c6a);
+      color:#fff;
+      font-size:28px;
+      margin-bottom:16px;
+    }
+    .option-card h3{
+      margin:0 0 8px;
+      font-size:clamp(17px, 2.0vw, 19px);
+      color:var(--brand);
+    }
+    .option-card p{
+      color:var(--muted);
+      font-size:var(--fs-small);
+      flex:1;
+      margin-bottom:16px;
+    }
+    .option-card .btn{
+      width:100%;
+      justify-content:center;
+      font-size:13px;
+      height:42px;
+    }
+
+    /* ============ CTA Box ============ */
+    .cta-box{
+      background:linear-gradient(135deg, #fff3cd 0%, #ffe0a0 100%);
+      border:2px solid #ffc107;
+      border-radius:var(--radius);
+      padding:24px;
+      margin:24px 0;
+      text-align:center;
+    }
+    .cta-box h3{
+      color:#856404;
+      margin:0 0 12px;
+    }
+    .cta-box p{
+      color:#856404;
+      margin-bottom:16px;
+    }
+
+    /* ============ Botón "Volver" ============ */
+    .back-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--brand);
+      font-weight:600;
+      text-decoration:none;
+      transition:gap .12s ease;
+    }
+    .back-btn:hover{
+      gap:12px;
+      text-decoration:underline;
+    }
+
+    /* ============ Anclas accesibles ============ */
+    [id]{scroll-margin-top:calc(var(--headerH) + 10px)}
+
+    /* ============ Botón "Arriba" ============ */
+    .to-top{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      z-index:9999;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:56px;
+      height:56px;
+      border-radius:999px;
+      background:#0b3d91;
+      color:#fff;
+      border:1px solid #09316f;
+      box-shadow:0 6px 18px rgba(0,0,0,.25);
+      font-size:24px;
+      text-decoration:none;
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .to-top:hover{
+      background:#072c6a;
+      transform:translateY(-2px);
+      box-shadow:0 8px 24px rgba(0,0,0,.35);
+      text-decoration:none;
+    }
+    .to-top:focus-visible{
+      outline:3px solid #bcd1ff;
+      outline-offset:2px;
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+    }
+  </style>
+</head>
+<body>
+
+  <header id="top">
+    <div class="wrap">
+      <div class="brand">
+        <h1>Diagnosticar — Guardia, especialidades y diagnóstico</h1>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-wa" href="https://api.whatsapp.com/send/?phone=5491100000000&text&type=phone_number&app_absent=0" target="_blank" rel="noopener">
+          <span class="btn-wa-icon">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+          </span>
+          WhatsApp
+        </a>
+        <a class="btn btn-primary" href="index.html">
+          Volver
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="guardia-info-bar">
+    <div class="wrap">
+      <div class="guardia-info-text">
+        <strong>Centro médico integral con guardia, estudios por imágenes y laboratorio.</strong>
+        <div>Guardia hoy: <span class="horario">07:00–20:00</span> · Domingos <span class="horario">16:00–20:00</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stack">
+
+      <!-- ================== ÍNDICE ================== -->
+      <nav id="indice" class="index" aria-label="Índice">
+        <details class="idx" open>
+          <summary class="idx-toggle">
+            Índice <span class="chip">toc</span>
+          </summary>
+          <div class="index-inner">
+            <h2>Índice</h2>
+            <ol class="h1">
+              <li>
+                <a class="title" href="index.html#a-1">1. Guardia médica</a>
+              </li>
+              <li>
+                <a class="title" href="index.html#a-2">2. Estudios y especialidades</a>
+              </li>
+              <li>
+                <a class="title" href="index.html#a-3">3. Cómo atenderte</a>
+              </li>
+              <li>
+                <a class="title" href="index.html#a-4">4. Sedes y horarios</a>
+              </li>
+              <li>
+                <a class="title" href="index.html#a-5">5. Coberturas</a>
+              </li>
+              <li>
+                <a class="title" href="index.html#a-6">6. Resultados e informes online</a>
+              </li>
+              <li>
+                <a class="title" href="index.html#a-7">7. Preguntas frecuentes</a>
+              </li>
+              <li>
+                <a class="title" href="index.html#a-8">8. Contacto y ayuda</a>
+              </li>
+              <li>
+                <a class="title" href="#sacar-turno">📍 Sacar turno</a>
+              </li>
+            </ol>
+          </div>
+        </details>
+      </nav>
+
+      <!-- ================== CONTENIDO ================== -->
+      <main class="content">
+
+      <!-- Sección Principal -->
+      <section id="sacar-turno">
+        <h1>Sacar turno</h1>
+        <p class="meta">
+          Elegí el canal que más te convenga para coordinar tu turno. Estamos disponibles en múltiples plataformas para tu comodidad.
+        </p>
+
+        <!-- Opciones de turnos -->
+        <div class="options-grid">
+          <!-- Opción 1: WhatsApp -->
+          <div class="option-card">
+            <div class="option-icon" style="background: #25d366;">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+            </div>
+            <h3>WhatsApp</h3>
+            <p>Consulta disponibilidad y coordina tu turno rápidamente por WhatsApp. Disponible 24/7.</p>
+            <a href="https://api.whatsapp.com/send/?phone=5491100000000&text=Hola%2C%20me%20gustar%C3%ADa%20agendar%20un%20turno" target="_blank" rel="noopener" class="btn btn-wa">
+              <span class="btn-wa-icon">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+              </span>
+              Escribir por WhatsApp
+            </a>
+          </div>
+
+          <!-- Opción 2: Teléfono -->
+          <div class="option-card">
+            <div class="option-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+              </svg>
+            </div>
+            <h3>Teléfono</h3>
+            <p>Llamá directamente a nuestras sedes. Personal administrativo disponible en horarios de atención.</p>
+            <a href="tel:+541100000000" class="btn btn-primary">
+              +54 11 0000-0000
+            </a>
+          </div>
+
+          <!-- Opción 3: Presencial -->
+          <div class="option-card">
+            <div class="option-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12a48.694 48.694 0 0 1-1.388 8.051a3.998 3.998 0 0 1-3.7 2.649 48.159 48.159 0 0 1-7.324 0 3.998 3.998 0 0 1-3.7-2.649 48.694 48.694 0 0 1-1.388-8.051m0 0V5.25m0 12.75h4.5m0 0h13.5m-13.5 0v-3m13.5 3v-3m0 0v-3" />
+              </svg>
+            </div>
+            <h3>Presencial</h3>
+            <p>Visitá nuestras sedes directamente durante horarios de atención. Sin turno previo para guardia.</p>
+            <a href="index.html#a-4" class="btn btn-primary">
+              Ver horarios y sedes
+            </a>
+          </div>
+        </div>
+
+        <!-- CTA Box -->
+        <div class="cta-box">
+          <h3>💡 Consejo</h3>
+          <p>Para garantizar tu turno en la fecha y hora que preferís, te recomendamos coordinar con anticipación por WhatsApp o teléfono, especialmente en horarios pico (mañanas de lunes a viernes).</p>
+        </div>
+      </section>
+
+      <!-- Información sobre turnos -->
+      <section>
+        <h2>Información importante sobre turnos</h2>
+
+        <h3>¿Qué necesitás para sacar turno?</h3>
+        <ul>
+          <li>Tipo de consulta o estudio que necesitás</li>
+          <li>Sede preferida (Berazategui o Lomas de Zamora)</li>
+          <li>Obra social o si es atención particular</li>
+          <li>Datos personales básicos (nombre, DNI, teléfono)</li>
+        </ul>
+
+        <h3>Horarios de atención administrativa</h3>
+        <ul>
+          <li><strong>Lunes a viernes:</strong> 07:00 a 20:00 hs</li>
+          <li><strong>Sábados:</strong> 08:00 a 13:00 hs</li>
+          <li><strong>Fuera de horario:</strong> Podés escribir por WhatsApp (respuesta en el próximo horario de atención)</li>
+        </ul>
+
+        <h3>¿Puedo cambiar o cancelar mi turno?</h3>
+        <p>
+          Sí, podés reprogramar o cancelar tu turno con anticipación. Lo recomendamos hacer lo antes posible para que otro paciente pueda tomar ese horario.
+        </p>
+        <p>
+          Para cambios, escribí por WhatsApp o llamá a la sede con tu número de turno a mano.
+        </p>
+
+        <h3>Preparación para tu turno</h3>
+        <p>
+          Según el tipo de estudio o consulta, puede haber indicaciones especiales (ayuno, medicación, documentación, etc.).
+        </p>
+        <p>
+          Al coordinar tu turno, te enviaremos las indicaciones completas. Si tenés dudas, escribí por WhatsApp y nuestro equipo te orientará.
+        </p>
+      </section>
+
+      <!-- Volver -->
+      <section style="text-align: center; background: transparent; border: none; padding-top: 12px;">
+        <a href="index.html" class="back-btn">
+          ← Volver a inicio
+        </a>
+      </section>
+
+      </main>
+    </div>
+  </div>
+
+  <a href="#top" class="to-top" aria-label="Volver arriba">↑</a>
+
+</body>
+</html>
