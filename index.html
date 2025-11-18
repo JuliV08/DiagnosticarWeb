@@ -1609,19 +1609,29 @@
   <a href="#inicio" class="to-top" aria-label="Volver arriba">↑</a>
 
   <script>
-    // Cerrar índice en mobile por defecto
-    function handleIndexOnMobile(){
-      const indexDetails = document.querySelector('.idx');
-      if(indexDetails){
-        if(window.innerWidth < 1024){
+    const indexDetails = document.querySelector('.idx');
+    let wasMobile = window.innerWidth < 1024;
+
+    if (indexDetails) {
+      if (wasMobile) {
+        indexDetails.removeAttribute('open');
+      } else {
+        indexDetails.setAttribute('open', '');
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      if (!indexDetails) return;
+      const isMobile = window.innerWidth < 1024;
+      if (isMobile !== wasMobile) {
+        if (isMobile) {
           indexDetails.removeAttribute('open');
         } else {
           indexDetails.setAttribute('open', '');
         }
+        wasMobile = isMobile;
       }
-    }
-    handleIndexOnMobile();
-    window.addEventListener('resize', handleIndexOnMobile);
+    });
   </script>
 
 </body>
