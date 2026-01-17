@@ -158,6 +158,18 @@
       font-weight: 600;
     }
 
+    /* ============ Grid específico para Guardias (2 columnas) ============ */
+    .guards-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) {
+      .guards-grid {
+        grid-template-columns: 1fr 1fr; /* Dos columnas grandes */
+      }
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -1601,7 +1613,7 @@
             <h3 style="color: var(--brand); margin-bottom: 16px;">1.4 Guardias por servicio</h3>
             <p style="margin-bottom: 16px; color: var(--muted);">Horarios de atención por demanda espontánea según especialidad.</p>
             
-            <div class="service-grid" style="margin: 0;">
+            <div class="guards-grid" style="margin: 0;">
               <!-- Guardia Clínica Médica -->
               <article class="service-card" itemscope itemtype="https://schema.org/MedicalClinic">
                 <div class="service-icon">
