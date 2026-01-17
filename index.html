@@ -1773,7 +1773,7 @@
           <!-- 2.4 Listado completo de servicios médicos -->
           <div id="a-2-4" style="margin-top: 24px;">
             <h3 style="color: var(--brand); margin-bottom: 8px;">2.4 Listado completo de servicios médicos</h3>
-            <p style="margin-bottom: 20px; color: var(--muted);">Todas las especialidades y estudios disponibles en Diagnosticar. Hacé clic en "Solicitar turno" para coordinar tu atención.</p>
+            <p style="margin-bottom: 20px; color: var(--muted);">Todas las especialidades y estudios disponibles en Diagnosticar. Tocá la tarjeta de la especialidad para sacar turno.</p>
             
             <div style="display: grid; grid-template-columns: 1fr; gap: 8px;" class="services-list-grid">
               <style>
@@ -1789,68 +1789,65 @@
                   background: var(--card);
                   border: 1px solid var(--line);
                   border-radius: 10px;
-                  transition: background .15s ease;
-                }
-                .service-item:hover { background: #f0f4ff; }
-                .service-item span { font-weight: 500; color: var(--ink); }
-                .service-item .btn-pill {
-                  display: inline-flex;
-                  align-items: center;
-                  padding: 6px 12px;
-                  border-radius: 999px;
-                  border: 1px solid var(--brand);
-                  font-size: 12px;
-                  font-weight: 600;
-                  background: #fff;
-                  color: var(--brand);
+                  transition: all .2s ease;
                   text-decoration: none;
-                  white-space: nowrap;
-                  transition: background .15s ease, color .15s ease;
+                  color: var(--ink);
+                  cursor: pointer;
                 }
-                .service-item .btn-pill:hover {
+                .service-item:hover {
                   background: var(--brand);
-                  color: #fff;
+                  border-color: var(--brand);
+                  transform: translateY(-2px);
                   text-decoration: none;
+                  box-shadow: 0 4px 12px rgba(11, 61, 145, .15);
+                }
+                .service-item span { 
+                  font-weight: 500; 
+                  color: var(--ink);
+                  transition: color .2s ease;
+                }
+                .service-item:hover span {
+                  color: #fff;
                 }
               </style>
               
               <!-- Columna 1 -->
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Traumatología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Cardiología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo físico Policía PBA</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Apto físico PBA</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo médico clínico</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo obesidad, nutrición y diabetes</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Cirugía general</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Clínica médica</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Dermatología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ecodoppler cardíaco / Ecocardiograma</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ecografía</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Electroencefalograma</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ergometría</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Espirometría</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Gastroenterología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ginecología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Holter</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Traumatología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Cardiología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo físico Policía PBA</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Apto físico PBA</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo médico clínico</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo obesidad, nutrición y diabetes</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Cirugía general</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Clínica médica</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Dermatología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ecodoppler cardíaco / Ecocardiograma</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ecografía</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Electroencefalograma</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ergometría</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Espirometría</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Gastroenterología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ginecología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Holter</span></a>
               
               <!-- Columna 2 -->
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Kinesiología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Mamografía</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo preventivo de cáncer</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Prevención de ACV</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Prevención del infarto cardíaco</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Neumonología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Neurología y neurocirugía</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Odontología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Oftalmología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Otorrinolaringología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Pediatría</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Presurometría</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Radiología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Resonancia magnética</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Reumatología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Tratamiento del dolor</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
-              <div class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Urología</span><a href="turnos.html#sacar-turno" class="btn-pill">Solicitar turno</a></div>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Kinesiología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Mamografía</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo preventivo de cáncer</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Prevención de ACV</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Prevención del infarto cardíaco</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Neumonología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Neurología y neurocirugía</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Odontología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Oftalmología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Otorrinolaringología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Pediatría</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Presurometría</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Radiología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Resonancia magnética</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Reumatología</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Tratamiento del dolor</span></a>
+              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Urología</span></a>
             </div>
           </div>
         </section>
