@@ -64,6 +64,41 @@
       animation: none;
     }
 
+    /* ============ Botón flotante Turnos ============ */
+    .turnos-float {
+      position: fixed;
+      right: 20px;
+      bottom: 160px; /* Arriba de WhatsApp */
+      z-index: 9998;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(11, 61, 145, .3);
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease;
+      opacity: 0;
+      animation: fade-in-up 0.5s ease forwards 1s;
+    }
+    
+    @keyframes fade-in-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .turnos-float:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(11, 61, 145, .4);
+      background: #0d47a1;
+      text-decoration: none;
+      color: #fff;
+    }
+
     .wa-float svg {
       width: 32px;
       height: 32px;
@@ -1010,6 +1045,11 @@
       videoSections.forEach(section => observer.observe(section));
     })();
   </script>
+
+  <!-- Botón flotante de Turnos -->
+  <a href="#sacar-turno" class="turnos-float">
+    📅 Sacar turno
+  </a>
 
   <!-- Botón flotante de WhatsApp -->
   <a href="https://api.whatsapp.com/send/?phone=5491123519307&text&type=phone_number&app_absent=0" 
