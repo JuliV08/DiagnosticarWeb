@@ -2066,16 +2066,41 @@
               <!-- Especialidades en Lomas de Zamora -->
               <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line);">
                 <strong style="display: block; margin-bottom: 12px; color: var(--brand); font-size: 15px;">Especialidades en Lomas de Zamora</strong>
-                <ul style="margin: 0 0 16px; padding-left: 20px; color: var(--ink); font-size: var(--fs-small); line-height: 1.8;">
-                  <li>Clínica médica (demanda espontánea), certificados médicos y aptos físicos.</li>
-                  <li>Cardiología y estudios del corazón (electrocardiogramas, holter, presurometrías, ergometrías, ecodoppler cardíacos).</li>
-                  <li>Ortopedia y traumatología.</li>
-                  <li>Ecografías y ecodoppler.</li>
-                  <li>Oftalmología.</li>
-                  <li>Ginecología.</li>
-                  <li>Nutrición.</li>
-                  <li>Dermatología.</li>
-                </ul>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 6px; margin-bottom: 16px;">
+                  <style>
+                    @media (min-width: 480px) {
+                      .lomas-specialties { grid-template-columns: 1fr 1fr !important; }
+                    }
+                    .lomas-specialty-item {
+                      display: block;
+                      padding: 10px 14px;
+                      background: var(--card);
+                      border: 1px solid var(--line);
+                      border-radius: 8px;
+                      color: var(--ink);
+                      font-size: 13px;
+                      font-weight: 500;
+                      text-decoration: none;
+                      transition: all .2s ease;
+                    }
+                    .lomas-specialty-item:hover {
+                      background: var(--brand);
+                      border-color: var(--brand);
+                      color: #fff;
+                      text-decoration: none;
+                    }
+                  </style>
+                  <div class="lomas-specialties" style="display: grid; grid-template-columns: 1fr; gap: 6px;">
+                    <a href="turnos.html" class="lomas-specialty-item">Clínica médica, certificados y aptos físicos</a>
+                    <a href="turnos.html" class="lomas-specialty-item">Cardiología y estudios del corazón</a>
+                    <a href="turnos.html" class="lomas-specialty-item">Ortopedia y traumatología</a>
+                    <a href="turnos.html" class="lomas-specialty-item">Ecografías y ecodoppler</a>
+                    <a href="turnos.html" class="lomas-specialty-item">Oftalmología</a>
+                    <a href="turnos.html" class="lomas-specialty-item">Ginecología</a>
+                    <a href="turnos.html" class="lomas-specialty-item">Nutrición</a>
+                    <a href="turnos.html" class="lomas-specialty-item">Dermatología</a>
+                  </div>
+                </div>
                 <a href="#a-2-4" style="color: var(--brand); font-weight: 600; font-size: var(--fs-small); text-decoration: underline;">Ver listado completo de servicios →</a>
               </div>
 
