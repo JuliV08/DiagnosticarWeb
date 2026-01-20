@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sede Lomas de Zamora — Diagnosticar</title>
+  <link rel="icon" type="image/avif" href="assets/logoCompleto.avif">
+  <meta name="description"
+    content="Diagnosticar Lomas de Zamora. Especialidades médicas, turnos online y atención de calidad en Av. Hipólito Yrigoyen 9479.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============ Tokens ============ */
+    :root {
+      --ink: #0b1620;
+      --muted: #5a6a7a;
+      --brand: #0b3d91;
+      --line: #e6eaf2;
+      --card: #f7f9fc;
+      --bg: #ffffff;
+      --radius: 14px;
+      --pad: 16px;
+      --headerH: 72px;
+      --tap: 48px;
+      --fs-body: clamp(16px, 1.8vw, 18px);
+      --fs-h2: clamp(20px, 2.6vw, 24px);
+      --fs-h3: clamp(17px, 2.2vw, 20px);
+      --fs-small: clamp(13px, 1.5vw, 14px);
+    }
+
+    /* ============ WhatsApp flotante ============ */
+    @keyframes float-wa {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .wa-float {
+      position: fixed;
+      right: 20px;
+      bottom: 90px;
+      z-index: 9998;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 999px;
+      background: #25d366;
+      color: #fff;
+      border: 2px solid #1da955;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, .4);
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease;
+      animation: float-wa 3s ease-in-out infinite;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 28px rgba(37, 211, 102, .5);
+      text-decoration: none;
+      animation: none;
+    }
+
+    .wa-float svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: var(--fs-body);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    a:hover {
+      text-decoration: underline
+    }
+
+    /* ============ Header ============ */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: linear-gradient(120deg, var(--brand), #072c6a);
+      color: #fff;
+      border-bottom: 1px solid #002b6b;
+    }
+
+    header .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px var(--pad);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .brand-logo-link {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .brand-logo {
+      display: block;
+      max-height: 48px;
+      width: auto;
+      height: auto;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--tap);
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .08s ease, box-shadow .08s ease, background .15s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .18);
+    }
+
+    .btn:focus-visible {
+      outline: 3px solid #bcd1ff;
+      outline-offset: 2px;
+    }
+
+    .btn-primary {
+      background: #ffffff;
+      color: var(--brand);
+      border-color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #e9efff;
+      text-decoration: none;
+    }
+
+    .btn-wa {
+      background: #25d366;
+      color: #ffffff;
+      border-color: #1da955;
+    }
+
+    .btn-wa:hover {
+      background: #1da955;
+      text-decoration: none;
+    }
+
+    .btn-wa-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #25d366;
+      font-size: 14px;
+      margin-right: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--brand);
+      border: 2px solid var(--brand);
+    }
+
+    .btn-secondary:hover {
+      background: #f0f4ff;
+      text-decoration: none;
+    }
+
+    @media (max-width:600px) {
+      header .wrap {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .cta-row {
+        justify-content: flex-start;
+        width: 100%;
+      }
+
+      .cta-row .btn {
+        font-size: 13px;
+        padding: 0 14px;
+        height: 42px;
+      }
+    }
+
+    /* ============ Banner de sede ============ */
+    .sede-banner {
+      background: linear-gradient(120deg, #0a2f70 0%, #061e4d 100%);
+      color: #fff;
+      padding: 14px var(--pad);
+      text-align: center;
+      border-bottom: 1px solid #001a3e;
+    }
+
+    .sede-banner-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sede-banner strong {
+      font-size: var(--fs-body);
+    }
+
+    .sede-banner .change-sede {
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.3);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: var(--fs-small);
+      cursor: pointer;
+      transition: background .15s ease;
+    }
+
+    .sede-banner .change-sede:hover {
+      background: rgba(255,255,255,.25);
+      text-decoration: none;
+    }
+
+    /* ============ Layout ============ */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: var(--pad);
+    }
+
+    /* ============ Secciones ============ */
+    .section {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(26px, 4vw, 36px);
+      color: var(--brand);
+      margin: 0 0 16px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: var(--fs-h2);
+      color: var(--brand);
+      margin: 24px 0 14px 0;
+    }
+
+    h3 {
+      font-size: var(--fs-h3);
+      margin: 18px 0 10px;
+      color: var(--ink);
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: var(--fs-small);
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin: 0 0 14px;
+      line-height: 1.7;
+    }
+
+    ul {
+      margin: 14px 0 14px 24px;
+      padding-left: 0;
+    }
+
+    li {
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+
+    /* ============ Cards de información ============ */
+    .info-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin: 16px 0;
+    }
+
+    .info-card h4 {
+      margin: 0 0 12px;
+      font-size: var(--fs-h3);
+      color: var(--brand);
+    }
+
+    .info-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin: 14px 0;
+    }
+
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 8px;
+      background: var(--brand);
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .info-content {
+      flex: 1;
+    }
+
+    .info-content strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      color: var(--muted);
+    }
+
+    .info-content p {
+      margin: 2px 0;
+      line-height: 1.6;
+    }
+
+    /* ============ Horarios ============ */
+    .schedule-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .schedule-list li {
+      margin: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .schedule-list li strong {
+      font-weight: 600;
+    }
+
+    .schedule-list li span:last-child {
+      color: var(--brand);
+      font-weight: 600;
+    }
+
+    /* ============ Especialidades grid ============ */
+    .specialties-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    @media (min-width: 480px) {
+      .specialties-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .specialty-item {
+      display: block;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink);
+      font-size: var(--fs-body);
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+
+    .specialty-item:hover {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+      text-decoration: none;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(11, 61, 145, .15);
+    }
+
+    /* ============ Bloque destacado ============ */
+    .highlight-box {
+      margin: 20px 0;
+      padding: 18px 20px;
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+      border: 2px solid #4caf50;
+      border-radius: var(--radius);
+    }
+
+    .highlight-box h4 {
+      margin: 0 0 10px;
+      color: #2e7d32;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .highlight-box p {
+      margin: 0;
+      color: #388e3c;
+      font-weight: 500;
+    }
+
+    /* ============ CTA Box ============ */
+    .cta-box {
+      background: linear-gradient(135deg, #f0f4ff 0%, #e3ecff 100%);
+      border: 2px solid var(--brand);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+      text-align: center;
+    }
+
+    .cta-box h3 {
+      color: var(--brand);
+      margin: 0 0 12px;
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .cta-box .btn {
+      margin: 6px;
+    }
+
+    /* ============ Info banner ============ */
+    .info-banner {
+      background: linear-gradient(135deg, #fff3cd 0%, #ffe0a0 100%);
+      border: 2px solid #ffc107;
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin: 20px 0;
+    }
+
+    .info-banner p {
+      margin: 0;
+      color: #856404;
+      font-weight: 500;
+    }
+
+    .info-banner a {
+      color: #856404;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    /* ============ Botón "Arriba" ============ */
+    .to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 9999;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      background: #0b3d91;
+      color: #fff;
+      border: 1px solid #09316f;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+      font-size: 24px;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .to-top:hover {
+      background: #072c6a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+      text-decoration: none;
+    }
+
+    /* ============ Footer CTA ============ */
+    .footer-cta {
+      text-align: center;
+      padding: 24px;
+      margin-top: 20px;
+    }
+
+    .footer-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--brand);
+      font-weight: 600;
+      font-size: var(--fs-body);
+    }
+
+    .footer-cta a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="inicio" style="position: absolute; top: 0;"></div>
+
+  <header id="top">
+    <div class="wrap">
+      <div class="brand">
+        <a class="brand-logo-link" href="index.html" aria-label="Ir al inicio">
+          <img src="assets/logoCompleto.avif" alt="Diagnosticar — Guardia, especialidades y diagnóstico"
+            class="brand-logo">
+        </a>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-wa"
+          href="https://api.whatsapp.com/send/?phone=5491123519307&text&type=phone_number&app_absent=0" target="_blank"
+          rel="noopener">
+          <span class="btn-wa-icon">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+            </svg>
+          </span>
+          WhatsApp
+        </a>
+        <a class="btn btn-primary" href="turnos.html#sacar-turno">
+          Sacar turno
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner persistente de sede -->
+  <div class="sede-banner">
+    <div class="sede-banner-inner">
+      <strong>📍 Estás viendo: Lomas de Zamora</strong>
+      <button class="change-sede" onclick="cambiarSede()">Cambiar sede</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- CTA Principal -->
+    <div class="cta-box" style="margin-top: 20px;">
+      <h3>Sacá tu turno en Lomas de Zamora</h3>
+      <p>Coordiná tu consulta o estudio de forma rápida y sencilla.</p>
+      <a href="turnos.html#sacar-turno" class="btn btn-primary" style="background: var(--brand); color: #fff; border-color: var(--brand);">
+        Sacar turno online
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=5491123519307&text=Hola%2C%20quiero%20sacar%20turno%20en%20Lomas" target="_blank" rel="noopener" class="btn btn-wa">
+        <span class="btn-wa-icon">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </span>
+        Escribir por WhatsApp
+      </a>
+    </div>
+
+    <!-- Datos de la sede -->
+    <section class="section">
+      <h1>Sede Lomas de Zamora</h1>
+      <p class="meta">Información de contacto, horarios y especialidades disponibles en esta sede.</p>
+
+      <div class="info-card">
+        <div class="info-item">
+          <span class="info-icon">📍</span>
+          <div class="info-content">
+            <strong>Dirección</strong>
+            <p>Av. Hipólito Yrigoyen 9479<br>B1832 Lomas de Zamora, Provincia de Buenos Aires</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <span class="info-icon">🕐</span>
+          <div class="info-content">
+            <strong>Horarios</strong>
+            <ul class="schedule-list">
+              <li>
+                <span><strong>Lunes a viernes:</strong></span>
+                <span>08:00 a 17:00 hs</span>
+              </li>
+              <li>
+                <span><strong>Sábados:</strong></span>
+                <span>08:00 a 13:00 hs</span>
+              </li>
+              <li>
+                <span><strong>Domingos:</strong></span>
+                <span>Consultar disponibilidad</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <span class="info-icon">📞</span>
+          <div class="info-content">
+            <strong>Contacto</strong>
+            <p>
+              <strong>Teléfono:</strong> <a href="tel:+5491152567028" style="color: var(--brand);">5256-7028</a><br>
+              <strong>Email:</strong> <a href="mailto:diagnosticarinformes@gmail.com" style="color: var(--brand);">diagnosticarinformes@gmail.com</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <span class="info-icon">ℹ️</span>
+          <div class="info-content">
+            <strong>Transporte</strong>
+            <p>Podés consultar cómo llegar y opciones de transporte al momento de coordinar el turno.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Guardia clínica ambulatoria -->
+    <section class="section">
+      <h2>Atención sin turno previo</h2>
+      
+      <div class="highlight-box">
+        <h4>🏥 Guardia clínica ambulatoria</h4>
+        <p>Atención por demanda espontánea · Lunes a viernes de 08:00 a 17:00 hs</p>
+      </div>
+
+      <p>Podés acercarte directamente a la sede para consultas clínicas sin necesidad de turno previo durante el horario de atención.</p>
+    </section>
+
+    <!-- Especialidades en Lomas -->
+    <section class="section">
+      <h2>Especialidades en Lomas de Zamora</h2>
+      <p>Las siguientes especialidades están disponibles en esta sede. Tocá para sacar turno:</p>
+
+      <div class="specialties-grid">
+        <a href="turnos.html#sacar-turno" class="specialty-item">Clínica médica, certificados y aptos físicos</a>
+        <a href="turnos.html#sacar-turno" class="specialty-item">Cardiología y estudios del corazón</a>
+        <a href="turnos.html#sacar-turno" class="specialty-item">Ortopedia y traumatología</a>
+        <a href="turnos.html#sacar-turno" class="specialty-item">Ecografías y ecodoppler</a>
+        <a href="turnos.html#sacar-turno" class="specialty-item">Oftalmología</a>
+        <a href="turnos.html#sacar-turno" class="specialty-item">Ginecología</a>
+        <a href="turnos.html#sacar-turno" class="specialty-item">Nutrición</a>
+        <a href="turnos.html#sacar-turno" class="specialty-item">Dermatología</a>
+        <a href="turnos.html#sacar-turno" class="specialty-item">Certificado médico</a>
+        <a href="turnos.html#sacar-turno" class="specialty-item">Videollamada</a>
+      </div>
+
+      <div class="info-banner">
+        <p>⚠️ <strong>Importante:</strong> Las especialidades varían según la sede. Si sos paciente de Berazategui, <a href="index.html#a-2">consultá las especialidades de esa sede</a>.</p>
+      </div>
+    </section>
+
+    <!-- CTA Medio -->
+    <div class="cta-box">
+      <h3>¿Tenés dudas o querés consultar disponibilidad?</h3>
+      <p>Nuestro equipo está disponible para ayudarte.</p>
+      <a href="https://api.whatsapp.com/send/?phone=5491123519307&text=Hola%2C%20tengo%20una%20consulta%20sobre%20Lomas%20de%20Zamora" target="_blank" rel="noopener" class="btn btn-wa">
+        <span class="btn-wa-icon">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </span>
+        Escribinos por WhatsApp
+      </a>
+    </div>
+
+    <!-- Footer CTA -->
+    <div class="footer-cta">
+      <a href="index.html">← Volver a Berazategui (sede principal)</a>
+    </div>
+
+  </div>
+
+  <!-- Botón flotante WhatsApp -->
+  <a href="https://api.whatsapp.com/send/?phone=5491123519307&text&type=phone_number&app_absent=0" 
+     target="_blank" 
+     rel="noopener" 
+     class="wa-float" 
+     aria-label="Contactar por WhatsApp"
+     title="Escribinos por WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+  </a>
+
+  <a href="#inicio" class="to-top" aria-label="Volver arriba">↑</a>
+
+  <script>
+    // Guardar selección de sede
+    localStorage.setItem('dx_sede', 'lomas');
+
+    // Función para cambiar sede
+    function cambiarSede() {
+      localStorage.removeItem('dx_sede');
+      window.location.href = 'index.html';
+    }
+  </script>
+
+</body>
+
+</html>
