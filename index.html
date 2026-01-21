@@ -28,7 +28,7 @@
       --fs-body: clamp(15px, 1.6vw, 17px);
       --fs-h2: clamp(18px, 2.4vw, 22px);
       --fs-h3: clamp(16px, 2.0vw, 18px);
-      --fs-small: clamp(12px, 1.4vw, 13px);
+      --fs-small: 15px;
     }
 
     /* ============ Animaciones ============ */
@@ -143,8 +143,14 @@
     }
 
     html {
-      scroll-behavior: smooth
+      scroll-behavior: smooth;
     }
+
+    /* Branded Scrollbar */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #f8fafc; }
+    ::-webkit-scrollbar-thumb { background: var(--brand); border-radius: 5px; border: 2px solid #f8fafc; }
+    ::-webkit-scrollbar-thumb:hover { background: #072c6a; }
 
     body {
       margin: 0;
@@ -221,6 +227,85 @@
       padding: 16px var(--pad);
     }
 
+    /* Grid Alignment Utility */
+    .aligned-row {
+      display: flex;
+      flex-wrap: wrap; /* Allow wrapping on very small screens */
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      border-bottom: 1px dashed var(--line);
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+      min-width: 0;
+    }
+    .aligned-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+    .aligned-label {
+      font-weight: 600;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+    .aligned-value {
+      text-align: right;
+      color: var(--ink);
+      font-feature-settings: "tnum";
+    }
+    .aligned-value {
+      text-align: right;
+      color: var(--ink);
+      font-feature-settings: "tnum";
+      /* Removed white-space: nowrap to prevent card overflow */
+    }
+    /* Mobile adjustment for aligned rows if needed */
+    @media (max-width: 400px) {
+      .aligned-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        padding-bottom: 8px;
+      }
+      .aligned-value {
+        text-align: left;
+        font-size: 14px;
+        width: 100%;
+        margin-top: 2px;
+      }
+      .aligned-label {
+        width: 100%;
+      }
+    }
+    @media (max-width: 360px) {
+      .aligned-value { font-size: 13px; }
+    }
+    .aligned-value.highlight {
+      color: var(--brand);
+      font-weight: 500;
+    }
+
+    /* Standardize Service Features Lists */
+    .service-features li {
+      margin: 0; /* Override previous margin */
+      padding: 6px 0 6px 24px; /* Adjust padding */
+      position: relative;
+      font-size: var(--fs-small);
+      border-bottom: 1px dashed var(--line);
+    }
+    .service-features li:last-child {
+      border-bottom: none;
+    }
+    .service-features li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      color: var(--brand);
+      font-weight: 700;
+    }
+
     .page-title {
       margin: 0;
       font-size: clamp(20px, 3vw, 32px);
@@ -236,6 +321,10 @@
       gap: 8px;
       align-items: center;
       justify-content: flex-end;
+    }
+
+    .btn-quick {
+      cursor: pointer;
     }
 
     .btn {
@@ -279,6 +368,18 @@
 
     .btn-wa:hover {
       background: #1da955;
+      text-decoration: none;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .btn-secondary:hover {
+      background: #f1f3f5;
+      border-color: #dbe5ff;
       text-decoration: none;
     }
 
@@ -493,6 +594,7 @@
         top: calc(var(--headerH) + 12px);
         max-height: calc(100vh - var(--headerH) - 24px);
         overflow: auto;
+        z-index: 40;
       }
 
       .index::-webkit-scrollbar {
@@ -631,7 +733,6 @@
 
     @media (min-width:768px) {
       .location-card {
-        grid-template-columns: 1fr 1fr;
         gap: 20px;
       }
     }
@@ -993,6 +1094,7 @@
       position: relative;
     }
 
+
     .pro-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 10px 30px rgba(11, 61, 145, .12);
@@ -1320,10 +1422,116 @@
       height: 100%;
       border: 0;
     }
+    /* ============ New Features (Senior UX) ============ */
+    /* Sticky Banner */
+    .sede-banner {
+      display: none; /* Actived by JS */
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 8px 16px;
+      font-size: 14px;
+      position: relative; /* Scrolls away to avoid navbar conflict */
+      z-index: 1001;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-change-sede {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 2px 10px;
+      border-radius: 99px;
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-change-sede:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* Quick Access Block */
+    .quick-access-bar {
+      background: #f0f4ff;
+      border-bottom: 1px solid #dbe5ff;
+      padding: 20px var(--pad);
+    }
+    .quick-access-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 600px) {
+      .quick-access-wrap { grid-template-columns: repeat(3, 1fr); }
+    }
+    .btn-quick {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom, #ffffff, #f8fafc);
+      border: 1px solid #e2e8f0;
+      border-radius: 8px; /* More serious radius */
+      padding: 16px;
+      text-align: center;
+      gap: 8px;
+      color: #334155; /* Premium slate color */
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: all .2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-quick:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-color: #cbd5e1;
+      text-decoration: none;
+      color: var(--brand);
+    }
+    .btn-quick::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--brand);
+      transform: scaleX(0);
+      transition: transform 0.2s ease;
+      transform-origin: left;
+    }
+    .btn-quick:hover::after {
+      transform: scaleX(1);
+    }
+    .btn-quick svg { width: 28px; height: 28px; color: var(--brand); transition: transform 0.2s; }
+    .btn-quick:hover svg { transform: scale(1.1); }
+
+    /* Modal Sede */
+    .sede-modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      z-index: 10000; display: none; align-items: center; justify-content: center; padding: 16px;
+    }
+    .sede-modal-overlay.active { display: flex; }
+    .sede-modal-card {
+      background: #fff; width: 100%; max-width: 480px; padding: 24px;
+      border-radius: 20px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .sede-modal-title { font-size: 20px; color: var(--brand); margin-bottom: 16px; font-weight: 700; }
   </style>
 </head>
 
 <body>
+<body>
+  <!-- Sticky Banner Sede -->
+  <div id="sede-banner" class="sede-banner">
+    <span>Estás viendo información de: <strong id="sede-nombre-banner">Sede Berazategui</strong></span>
+    <button class="btn-change-sede" onclick="cambiarSede()">Cambiar</button>
+  </div>
+
   <div id="inicio" style="position: absolute; top: 0;"></div>
 
   <header id="top">
@@ -1360,55 +1568,30 @@
     </div>
   </section>
 
-  <div class="guardia-info-bar">
-    <div class="wrap">
-      <div class="guardia-info-text">
-        <strong>Centro médico integral con guardia y estudios por imágenes.</strong>
-        <div>Guardia hoy: <span class="horario">07:00–20:00</span> · Domingos <span class="horario">16:00–20:00</span>
-        </div>
-      </div>
-  </div>
 
-  <!-- Banner persistente de sede -->
-  <div id="sede-banner" class="sede-banner" style="background: linear-gradient(120deg, #1565c0 0%, #0d47a1 100%); color: #fff; padding: 12px var(--pad); text-align: center; border-bottom: 1px solid #0d47a1;">
-    <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center;">
-      <strong style="font-size: 16px;">📍 Estás viendo: Berazategui</strong>
-      <button onclick="cambiarSede()" style="background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); color: #fff; padding: 6px 14px; border-radius: 999px; font-size: 13px; cursor: pointer; transition: background .15s ease;">Cambiar sede</button>
-    </div>
-  </div>
 
-  <!-- Accesos rápidos -->
-  <div style="background: linear-gradient(135deg, #f0f4ff 0%, #e3ecff 100%); padding: 24px var(--pad); border-bottom: 2px solid var(--brand);">
-    <div style="max-width: 1100px; margin: 0 auto;">
-      <h2 style="text-align: center; color: var(--brand); margin: 0 0 16px; font-size: clamp(20px, 3vw, 26px);">Accesos rápidos</h2>
-      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
-        <a href="turnos.html#sacar-turno" class="btn btn-primary" style="background: var(--brand); color: #fff; border-color: var(--brand); font-size: 16px; height: 52px; padding: 0 24px;">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20" style="margin-right: 8px;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-          </svg>
-          Sacar turno
-        </a>
-        <a href="https://api.whatsapp.com/send/?phone=5491123519307&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="btn btn-wa" style="font-size: 16px; height: 52px; padding: 0 24px;">
-          <span class="btn-wa-icon" style="width: 24px; height: 24px;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-            </svg>
-          </span>
-          WhatsApp
-        </a>
-        <div style="position: relative;">
-          <button id="especialidades-btn" onclick="toggleEspecialidades()" class="btn btn-primary" style="background: #fff; color: var(--brand); border: 2px solid var(--brand); font-size: 16px; height: 52px; padding: 0 24px;">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20" style="margin-right: 8px;">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.652a3.75 3.75 0 0 1 0-5.304m5.304 0a3.75 3.75 0 0 1 0 5.304m-7.425 2.121a6.75 6.75 0 0 1 0-9.546m9.546 0a6.75 6.75 0 0 1 0 9.546M5.106 18.894c-3.808-3.807-3.808-9.98 0-13.788m13.788 0c3.808 3.807 3.808 9.98 0 13.788M12 12h.008v.008H12V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-            </svg>
-            Ver especialidades ▼
-          </button>
-          <div id="especialidades-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 8px; background: #fff; border: 2px solid var(--brand); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.15); z-index: 100; min-width: 280px;">
-            <a href="#a-2" onclick="closeEspecialidades()" style="display: block; padding: 14px 18px; color: var(--ink); font-weight: 500; border-bottom: 1px solid var(--line); text-decoration: none;">📍 Especialidades en Berazategui</a>
-            <a href="lomas.html" style="display: block; padding: 14px 18px; color: var(--ink); font-weight: 500; text-decoration: none;">📍 Especialidades en Lomas de Zamora</a>
-          </div>
-        </div>
-      </div>
+  <!-- Quick Access Block (Senior Friendly) -->
+  <div class="quick-access-bar">
+    <div class="quick-access-wrap">
+      <a href="turnos.html" class="btn-quick">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+        </svg>
+        Sacar Turno
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=5491123519307&text&type=phone_number&app_absent=0" target="_blank" class="btn-quick" style="color: #2e7d32; border-color: #25d366;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="color: #25d366;">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        WhatsApp
+      </a>
+      <button onclick="cambiarSede()" class="btn-quick">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+        </svg>
+        Cambiar Sede
+      </button>
     </div>
   </div>
 
@@ -1427,74 +1610,74 @@
               <li>
                 <a class="title" href="#a-1" style="display: flex; align-items: center; gap: 10px;">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" style="flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                  1. Guardia médica
+                  Guardia médica
                 </a>
                 <ol class="h2">
-                  <li><a class="title" href="#a-1-1">1.1 Horarios y sedes de guardia</a></li>
-                  <li><a class="title" href="#a-1-2">1.2 ¿Qué es demanda espontánea?</a></li>
-                  <li><a class="title" href="#a-1-3">1.3 Cuándo conviene sacar turno</a></li>
-                  <li><a class="title" href="#a-1-4">1.4 Guardias por servicio</a></li>
-                  <li><a class="title" href="#a-1-5">1.5 Cardiología sin turno</a></li>
+                  <li><a class="title" href="#a-1-1">Horarios y sedes de guardia</a></li>
+                  <li><a class="title" href="#a-1-4">Guardias por servicio</a></li>
+                  <li><a class="title" href="#a-1-5">Cardiología sin turno</a></li>
                 </ol>
               </li>
 
               <li>
                 <a class="title" href="#a-2" style="display: flex; align-items: center; gap: 10px;">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" style="flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.652a3.75 3.75 0 0 1 0-5.304m5.304 0a3.75 3.75 0 0 1 0 5.304m-7.425 2.121a6.75 6.75 0 0 1 0-9.546m9.546 0a6.75 6.75 0 0 1 0 9.546M5.106 18.894c-3.808-3.807-3.808-9.98 0-13.788m13.788 0c3.808 3.807 3.808 9.98 0 13.788M12 12h.008v.008H12V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>
-                  2. Estudios y especialidades
+                  Estudios y especialidades
                 </a>
                 <ol class="h2">
-                  <li><a class="title" href="#a-2-1">2.1 Resonancia magnética</a></li>
-                  <li><a class="title" href="#a-2-2">2.2 Ecografía</a></li>
-                  <li><a class="title" href="#a-2-3">2.3 Otras especialidades</a></li>
-                  <li><a class="title" href="#a-2-4">2.4 Listado completo de servicios</a></li>
+                  <li><a class="title" href="#a-2-1">Resonancia magnética</a></li>
+                  <li><a class="title" href="#a-2-2">Ecografía</a></li>
+                  <li><a class="title" href="#a-2-3">Otras especialidades</a></li>
+                  <li><a class="title" href="#a-2-4">Listado completo de servicios</a></li>
                 </ol>
               </li>
 
               <li>
                 <a class="title" href="#a-3" style="display: flex; align-items: center; gap: 10px;">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" style="flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
-                  3. Cómo atenderte
+                  Cómo atenderte
                 </a>
                 <ol class="h2">
-                  <li><a class="title" href="#a-3-1">3.1 Turnos online</a></li>
-                  <li><a class="title" href="#a-3-2">3.2 Atención por WhatsApp</a></li>
-                  <li><a class="title" href="#a-3-3">3.3 Preparación para estudios</a></li>
+                  <li><a class="title" href="#a-3-1">Turnos online</a></li>
+                  <li><a class="title" href="#a-3-2">Atención por WhatsApp</a></li>
+                  <li><a class="title" href="#a-3-3">Preparación para estudios</a></li>
                 </ol>
               </li>
 
               <li>
                 <a class="title" href="#a-4" style="display: flex; align-items: center; gap: 10px;">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" style="flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
-                  4. Sedes y horarios
+                  Sedes y horarios
                 </a>
                 <ol class="h2">
-                  <li><a class="title" href="#a-4-1">4.1 Sede Berazategui</a></li>
-                  <li><a class="title" href="#a-4-2">4.2 Sede Lomas de Zamora</a></li>
-                  <li><a class="title" href="#a-4-3">4.3 Otros centros especializados</a></li>
-                  <li><a class="title" href="#a-4-4">4.4 Imágenes de nuestras sedes</a></li>
+                  <li><a class="title" href="#a-4-1">Sede Berazategui</a></li>
+                  <li><a class="title" href="#a-4-2">Sede Lomas de Zamora</a></li>
+                  <li><a class="title" href="#a-4-3">Otros centros especializados</a></li>
+                  <li><a class="title" href="#a-1-2">¿Qué es demanda espontánea?</a></li>
+                  <li><a class="title" href="#a-1-3">Cuándo conviene sacar turno</a></li>
+                  <li><a class="title" href="#a-4-4">Imágenes de nuestras sedes</a></li>
                 </ol>
               </li>
 
               <li>
                 <a class="title" href="#a-5" style="display: flex; align-items: center; gap: 10px;">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" style="flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
-                  5. Coberturas
+                  Coberturas
                 </a>
                 <ol class="h2">
-                  <li><a class="title" href="#a-5-1">5.1 PAMI e IOMA</a></li>
-                  <li><a class="title" href="#a-5-2">5.2 Elevar</a></li>
+                  <li><a class="title" href="#a-5-1">PAMI e IOMA</a></li>
+                  <li><a class="title" href="#a-5-2">Elevar</a></li>
                 </ol>
               </li>
 
               <li>
                 <a class="title" href="#a-6" style="display: flex; align-items: center; gap: 10px;">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" style="flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
-                  6. Resultados e informes online
+                  Resultados e informes online
                 </a>
                 <ol class="h2">
-                  <li><a class="title" href="#a-6-1">6.1 Portal de resultados</a></li>
-                  <li><a class="title" href="#a-6-2">6.2 Ayuda para ver tus estudios</a></li>
+                  <li><a class="title" href="#a-6-1">Portal de resultados</a></li>
+                  <li><a class="title" href="#a-6-2">Ayuda para ver tus estudios</a></li>
                 </ol>
               </li>
 
@@ -1502,17 +1685,17 @@
               <li>
                 <a class="title" href="#a-7" style="display: flex; align-items: center; gap: 10px;">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" style="flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg>
-                  7. Contacto y ayuda
+                  Contacto y ayuda
                 </a>
                 <ol class="h2">
-                  <li><a class="title" href="#a-7-1">7.1 Canales de contacto</a></li>
-                  <li><a class="title" href="#a-7-2">7.2 Horarios de atención administrativa</a></li>
+                  <li><a class="title" href="#a-7-1">Canales de contacto</a></li>
+                  <li><a class="title" href="#a-7-2">Horarios de atención administrativa</a></li>
                 </ol>
               </li>
               <li style="display: none;">
-                <a class="title" href="#a-9">9. Profesionales</a>
+                <a class="title" href="#a-9">Profesionales</a>
                 <ol class="h2">
-                  <li><a class="title" href="#a-9-1">9.1 Equipo medico</a></li>
+                  <li><a class="title" href="#a-9-1">Equipo medico</a></li>
                 </ol>
               </li>
             </ol>
@@ -1545,16 +1728,16 @@
                 <h4 style="margin-top: 4px;">Horarios de guardia</h4>
                 <p style="margin-bottom: 14px;">Guardia médica para demanda espontánea sin turno previo.</p>
 
-                <ul class="schedule-list" style="background: white; padding: 14px; border-radius: 10px; margin: 0;">
-                  <li>
-                    <span><strong>Lunes a viernes:</strong></span>
-                    <span style="color: var(--brand); font-weight: 600;">07:00 a 20:00 hs</span>
-                  </li>
-                  <li>
-                    <span><strong>Domingos:</strong></span>
-                    <span style="color: var(--brand); font-weight: 600;">16:00 a 20:00 hs</span>
-                  </li>
-                </ul>
+                <div class="schedule-list" style="background: white; padding: 14px; border-radius: 10px; margin: 0; border: 1px solid var(--line);">
+                  <div class="aligned-row">
+                    <span class="aligned-label">Lunes a viernes:</span>
+                    <span class="aligned-value highlight">07:00 a 20:00 hs</span>
+                  </div>
+                  <div class="aligned-row">
+                    <span class="aligned-label">Domingos:</span>
+                    <span class="aligned-value highlight">16:00 a 20:00 hs</span>
+                  </div>
+                </div>
 
                 <p style="margin: 12px 0 0; font-size: var(--fs-small); color: var(--muted);">
                   ⚠️ Los horarios pueden ajustarse según la operación del centro. La franja actualizada se muestra
@@ -1564,57 +1747,7 @@
             </div>
           </div>
 
-          <div class="service-grid">
-            <!-- Demanda espontánea -->
-            <div class="service-card" id="a-1-2">
-              <div class="service-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" width="28" height="28">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
-                </svg>
-              </div>
-              <h4>¿Qué es demanda espontánea?</h4>
-              <p>Consultas que pueden resolverse acercándote directamente a la guardia, sin turno previo.</p>
 
-              <ul class="service-features">
-                <li>Síntomas agudos pero estables</li>
-                <li>Dudas sobre indicaciones o resultados</li>
-                <li>Evaluación clínica rápida</li>
-              </ul>
-
-              <div
-                style="margin-top: 12px; padding: 10px; background: #fff3cd; border-left: 3px solid #ffc107; border-radius: 6px; font-size: var(--fs-small);">
-                <strong>⚠️ Síntomas graves:</strong> Ante dolor intenso en el pecho, dificultad para respirar marcada o
-                pérdida de conciencia, acudir al servicio de emergencias.
-              </div>
-            </div>
-
-            <!-- Cuándo sacar turno -->
-            <div class="service-card" id="a-1-3">
-              <div class="service-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" width="28" height="28">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                </svg>
-              </div>
-              <h4>Cuándo conviene sacar turno</h4>
-              <p>Para controles, estudios programados o consultas con especialista, lo ideal es coordinar un turno.</p>
-
-              <ul class="service-features">
-                <li>Controles médicos programados</li>
-                <li>Estudios por imágenes</li>
-                <li>Consultas con especialistas</li>
-              </ul>
-
-              <div class="service-cta">
-                <a href="turnos.html" class="btn btn-primary">
-                  Sacar turno online
-                </a>
-              </div>
-            </div>
-          </div>
 
           <!-- 1.4 Guardias por servicio -->
           <div id="a-1-4" class="service-card" style="margin-top: 20px; background: var(--card);">
@@ -1632,10 +1765,14 @@
                 </div>
                 <h4 itemprop="name">Guardia Clínica Médica</h4>
                 <div class="schedule-grid">
-                  <span><strong>Lun–Sáb:</strong></span>
-                  <span>7:00–20:00</span>
-                  <span><strong>Dom:</strong></span>
-                  <span>12:00–20:00</span>
+                  <div class="aligned-row">
+                    <span class="aligned-label">Lun–Sáb:</span>
+                    <span class="aligned-value">7:00–20:00</span>
+                  </div>
+                  <div class="aligned-row">
+                    <span class="aligned-label">Dom:</span>
+                    <span class="aligned-value">12:00–20:00</span>
+                  </div>
                 </div>
               </article>
 
@@ -1649,8 +1786,10 @@
                 </div>
                 <h4 itemprop="name">Guardia Traumatológica</h4>
                 <div class="schedule-grid">
-                  <span><strong>Lun–Sáb:</strong></span>
-                  <span>8:00–19:00</span>
+                  <div class="aligned-row">
+                    <span class="aligned-label">Lun–Sáb:</span>
+                    <span class="aligned-value">8:00–19:00</span>
+                  </div>
                 </div>
               </article>
 
@@ -1664,8 +1803,10 @@
                 </div>
                 <h4 itemprop="name">Guardia de Odontología</h4>
                 <div class="schedule-grid">
-                  <span><strong>Lun–Sáb:</strong></span>
-                  <span>8:00–19:00</span>
+                  <div class="aligned-row">
+                    <span class="aligned-label">Lun–Sáb:</span>
+                    <span class="aligned-value">8:00–19:00</span>
+                  </div>
                 </div>
               </article>
 
@@ -1679,17 +1820,42 @@
                 </div>
                 <h4 itemprop="name">Guardia de Ecografías</h4>
                 <div class="schedule-grid">
-                  <span><strong>Lun–Sáb:</strong></span>
-                  <span>8:00–19:00</span>
-                  <span><strong>Dom:</strong></span>
-                  <span>12:00–19:00</span>
+                  <div class="aligned-row">
+                    <span class="aligned-label">Lun–Sáb:</span>
+                    <span class="aligned-value">8:00–19:00</span>
+                  </div>
+                  <div class="aligned-row">
+                    <span class="aligned-label">Dom:</span>
+                    <span class="aligned-value">12:00–19:00</span>
+                  </div>
                 </div>
               </article>
             </div>
           </div>
 
+          <!-- Portal CTA (Ex Video) -->
+          <div class="video-section" style="margin-top: 20px; text-align: center;">
+            <h3 class="video-section-title" style="justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
+              </svg>
+              Conocé nuestro portal
+            </h3>
+            <div class="video-wrapper" style="margin-bottom: 16px;">
+              <iframe src="https://www.youtube.com/embed/fgq20M8fNY0?enablejsapi=1&mute=1&rel=0&modestbranding=1" 
+                title="Video Institucional" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div style="padding: 10px;">
+              <p style="margin-bottom: 16px;">Accedé a tus resultados e informes de manera online.</p>
+              <a href="https://diagnosticar.zonasana.com.ar/login?v=v2.47.2" class="btn btn-primary" target="_blank" rel="noopener">Ingresá a nuestro portal</a>
+            </div>
+          </div>
+
           <!-- 1.5 Cardiología sin turno -->
-          <div id="a-1-5" class="service-card" style="margin-top: 20px; background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%); border: 2px solid #e91e63;" itemscope itemtype="https://schema.org/MedicalClinic">
+          <div id="a-1-5" class="service-card" style="margin-top: 20px;" itemscope itemtype="https://schema.org/MedicalClinic">
             <div style="display: flex; align-items: flex-start; gap: 16px;">
               <div class="service-icon" style="background: #e91e63; margin-bottom: 0;">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28">
@@ -1697,19 +1863,19 @@
                 </svg>
               </div>
               <div style="flex: 1;">
-                <h3 style="margin: 0 0 8px; color: #880e4f;" itemprop="name">1.5 Servicio de Cardiología — Consulta inicial sin turno</h3>
-                <p style="margin-bottom: 14px; color: #ad1457;">Atención cardiológica por demanda espontánea, sin necesidad de turno previo.</p>
+                <h3 style="margin: 0 0 8px;" itemprop="name">1.5 Servicio de Cardiología — Consulta inicial sin turno</h3>
+                <p style="margin-bottom: 14px;">Atención cardiológica por demanda espontánea, sin necesidad de turno previo.</p>
                 
-                <ul class="schedule-list" style="background: white; padding: 14px; border-radius: 10px; margin: 0 0 14px;">
-                  <li style="display: flex; justify-content: space-between; margin: 6px 0;">
-                    <span><strong>Atención:</strong></span>
-                    <span style="color: #e91e63; font-weight: 600;">Lunes a viernes · 9:00–17:00</span>
-                  </li>
-                  <li style="display: flex; justify-content: space-between; margin: 6px 0;" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                    <span><strong>Sede:</strong></span>
-                    <span style="color: var(--ink);" itemprop="streetAddress">Calle 15 y Lisandro de la Torre</span>
-                  </li>
-                </ul>
+                <div class="schedule-list" style="background: var(--card); padding: 14px; border-radius: 10px; margin: 0 0 14px; border: 1px solid var(--line);">
+                  <div class="aligned-row">
+                    <span class="aligned-label">Atención:</span>
+                    <span class="aligned-value highlight">Lunes a viernes · 9:00–17:00</span>
+                  </div>
+                  <div class="aligned-row" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                    <span class="aligned-label">Sede:</span>
+                    <span class="aligned-value" itemprop="streetAddress">Calle 15 y Lisandro de la Torre</span>
+                  </div>
+                </div>
 
                 <div class="pill-links">
                   <a href="#a-4-3" class="btn btn-secondary" style="font-size: 13px; height: 38px;">¿Cómo llegar?</a>
@@ -1817,80 +1983,170 @@
             <h3 style="color: var(--brand); margin-bottom: 8px;">2.4 Listado completo de servicios médicos</h3>
             <p style="margin-bottom: 20px; color: var(--muted);">Todas las especialidades y estudios disponibles en Diagnosticar. Tocá la tarjeta de la especialidad para sacar turno.</p>
             
-            <div style="display: grid; grid-template-columns: 1fr; gap: 8px;" class="services-list-grid">
-              <style>
-                @media (min-width: 768px) {
-                  .services-list-grid { grid-template-columns: 1fr 1fr !important; }
-                }
-                .service-item {
-                  display: flex;
-                  align-items: center;
-                  justify-content: space-between;
-                  gap: 12px;
-                  padding: 12px 16px;
-                  background: var(--card);
-                  border: 1px solid var(--line);
-                  border-radius: 10px;
-                  transition: all .2s ease;
-                  text-decoration: none;
-                  color: var(--ink);
-                  cursor: pointer;
-                }
-                .service-item:hover {
-                  background: var(--brand);
-                  border-color: var(--brand);
-                  transform: translateY(-2px);
-                  text-decoration: none;
-                  box-shadow: 0 4px 12px rgba(11, 61, 145, .15);
-                }
-                .service-item span { 
-                  font-weight: 500; 
-                  color: var(--ink);
-                  transition: color .2s ease;
-                }
-                .service-item:hover span {
-                  color: #fff;
-                }
-              </style>
-              
-              <!-- Columna 1 -->
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Traumatología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Cardiología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo físico Policía PBA</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Apto físico PBA</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo médico clínico</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo obesidad, nutrición y diabetes</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Cirugía general</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Clínica médica</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Dermatología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ecodoppler cardíaco / Ecocardiograma</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ecografía</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Electroencefalograma</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ergometría</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Espirometría</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Gastroenterología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Ginecología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Holter</span></a>
-              
-              <!-- Columna 2 -->
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Kinesiología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Mamografía</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Chequeo preventivo de cáncer</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Prevención de ACV</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Prevención del infarto cardíaco</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Neumonología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Neurología y neurocirugía</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Odontología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Oftalmología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Otorrinolaringología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Pediatría</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Presurometría</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Radiología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Resonancia magnética</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Reumatología</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Tratamiento del dolor</span></a>
-              <a href="turnos.html" class="service-item" itemscope itemtype="https://schema.org/MedicalSpecialty"><span itemprop="name">Urología</span></a>
-            </div>
+            <!-- Estilos para Acordeones de Categoría -->
+            <style>
+              .cat-accordion {
+                margin-bottom: 8px;
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                overflow: hidden;
+                background: var(--card);
+                transition: box-shadow .2s;
+              }
+              .cat-accordion:hover {
+                box-shadow: 0 4px 12px rgba(0,0,0,.06);
+              }
+              .cat-accordion[open] {
+                border-color: var(--brand);
+                background: #fff;
+                box-shadow: 0 6px 16px rgba(11, 61, 145, .1);
+              }
+              .cat-accordion[open] .cat-content {
+                animation: slideDown .3s ease-out forwards;
+              }
+              @keyframes slideDown {
+                from { opacity: 0; transform: translateY(-8px); }
+                to { opacity: 1; transform: translateY(0); }
+              }
+              .cat-summary {
+                padding: 14px 18px;
+                font-weight: 600;
+                color: var(--brand);
+                cursor: pointer;
+                list-style: none; /* remove default arrow */
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 16px;
+              }
+              .cat-summary::-webkit-details-marker { display: none; }
+              .cat-summary:after {
+                content: "+";
+                font-size: 20px;
+                font-weight: 400;
+                transition: transform .2s ease;
+              }
+              .cat-accordion[open] .cat-summary:after {
+                transform: rotate(45deg);
+              }
+              .cat-content {
+                padding: 0 16px 16px;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 8px;
+                border-top: 1px solid rgba(0,0,0,.05);
+                margin-top: 0;
+                padding-top: 12px;
+              }
+              .sub-pill {
+                display: block;
+                padding: 8px 12px;
+                background: #f4f7fc;
+                border-radius: 8px;
+                color: var(--ink);
+                font-size: 14px;
+                text-decoration: none;
+                transition: all .2s;
+                text-align: center;
+                border: 1px solid transparent;
+              }
+              .sub-pill:hover {
+                background: #e3ecff;
+                color: var(--brand);
+                border-color: #cce0ff;
+                text-decoration: none;
+              }
+            </style>
+
+            <!-- Categoría 1: Clínica Médica y Pediatría -->
+            <details class="cat-accordion">
+              <summary class="cat-summary">Clínica Médica y Pediatría</summary>
+              <div class="cat-content">
+                <a href="turnos.html" class="sub-pill">Clínica médica</a>
+                <a href="turnos.html" class="sub-pill">Pediatría</a>
+                <a href="turnos.html" class="sub-pill">Cirugía general</a>
+              </div>
+            </details>
+
+            <!-- Categoría 1b: Traumatología y Rehabilitación -->
+            <details class="cat-accordion">
+              <summary class="cat-summary">Traumatología y Rehabilitación</summary>
+              <div class="cat-content">
+                <a href="turnos.html" class="sub-pill">Traumatología</a>
+                <a href="turnos.html" class="sub-pill">Kinesiología</a>
+                <a href="turnos.html" class="sub-pill">Reumatología</a>
+                <a href="turnos.html" class="sub-pill">Tratamiento del dolor</a>
+              </div>
+            </details>
+
+            <!-- Categoría 1c: Ginecología y Urología -->
+            <details class="cat-accordion">
+              <summary class="cat-summary">Ginecología y Urología</summary>
+              <div class="cat-content">
+                <a href="turnos.html" class="sub-pill">Ginecología</a>
+                <a href="turnos.html" class="sub-pill">Urología</a>
+              </div>
+            </details>
+
+            <!-- Categoría 1d: Cabeza, Cuello y Sentidos -->
+            <details class="cat-accordion">
+              <summary class="cat-summary">Cabeza, Cuello y Sentidos</summary>
+              <div class="cat-content">
+                <a href="turnos.html" class="sub-pill">Oftalmología</a>
+                <a href="turnos.html" class="sub-pill">Otorrinolaringología</a>
+                <a href="turnos.html" class="sub-pill">Odontología</a>
+                <a href="turnos.html" class="sub-pill">Neurología y neurocirugía</a>
+              </div>
+            </details>
+
+            <!-- Categoría 1e: Otras Especialidades Clínicas -->
+            <details class="cat-accordion">
+              <summary class="cat-summary">Otras Especialidades Clínicas</summary>
+              <div class="cat-content">
+                <a href="turnos.html" class="sub-pill">Cardiología</a>
+                <a href="turnos.html" class="sub-pill">Dermatología</a>
+                <a href="turnos.html" class="sub-pill">Gastroenterología</a>
+                <a href="turnos.html" class="sub-pill">Neumonología</a>
+              </div>
+            </details>
+
+            <!-- Categoría 2: Diagnóstico por Imágenes -->
+            <details class="cat-accordion">
+              <summary class="cat-summary">Diagnóstico por Imágenes</summary>
+              <div class="cat-content">
+                <a href="turnos.html" class="sub-pill">Resonancia magnética</a>
+                <a href="turnos.html" class="sub-pill">Ecografía</a>
+                <a href="turnos.html" class="sub-pill">Radiología</a>
+                <a href="turnos.html" class="sub-pill">Mamografía</a>
+                <a href="turnos.html" class="sub-pill">Ecodoppler cardíaco / Ecocardiograma</a>
+              </div>
+            </details>
+
+            <!-- Categoría 3: Chequeos y Aptos Físicos -->
+            <details class="cat-accordion">
+              <summary class="cat-summary">Chequeos y Aptos Físicos</summary>
+              <div class="cat-content">
+                <a href="turnos.html" class="sub-pill">Chequeo médico clínico</a>
+                <a href="turnos.html" class="sub-pill">Chequeo preventivo de cáncer</a>
+                <a href="turnos.html" class="sub-pill">Chequeo físico Policía PBA</a>
+                <a href="turnos.html" class="sub-pill">Apto físico PBA</a>
+                <a href="turnos.html" class="sub-pill">Chequeo obesidad, nutrición y diabetes</a>
+                <a href="turnos.html" class="sub-pill">Prevención del infarto cardíaco</a>
+                <a href="turnos.html" class="sub-pill">Prevención de ACV</a>
+              </div>
+            </details>
+
+            <!-- Categoría 4: Estudios Cardiológicos y Funcionales -->
+            <details class="cat-accordion">
+              <summary class="cat-summary">Estudios Cardiológicos y Funcionales</summary>
+              <div class="cat-content">
+                <a href="turnos.html" class="sub-pill">Electroencefalograma</a>
+                <a href="turnos.html" class="sub-pill">Ergometría</a>
+                <a href="turnos.html" class="sub-pill">Espirometría</a>
+                <a href="turnos.html" class="sub-pill">Holter</a>
+                <a href="turnos.html" class="sub-pill">Presurometría</a>
+              </div>
+            </details>
           </div>
         </section>
 
@@ -1932,8 +2188,8 @@
             <!-- Atención por WhatsApp -->
             <div class="service-card" id="a-3-2" style="display: flex; flex-direction: column; height: 100%;">
               <div style="flex: 1;">
-                <div class="service-icon">
-                <svg viewBox="0 0 24 24" width="28" height="28" fill="#25d366">
+                <div class="service-icon" style="background: #25d366;">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="#ffffff">
                   <path
                     d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                 </svg>
@@ -2005,15 +2261,8 @@
           </p>
 
           <!-- Sede Berazategui -->
-          <div class="location-card" id="a-4-1">
-            <div class="location-map">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4045.956417600176!2d-58.214482023539524!3d-34.762221272897875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a32f11f6d78331%3A0xd4e260bc6000914a!2sDiagn%C3%B3sticar!5e1!3m2!1ses!2sus!4v1768842700333!5m2!1ses!2sus"
-                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-                title="Mapa de Sede Berazategui">
-              </iframe>
-            </div>
-            <div class="location-info">
+            <div class="location-card" id="a-4-1">
+              <div class="location-info">
               <h4>Sede Berazategui</h4>
 
               <div class="info-item">
@@ -2028,20 +2277,20 @@
                 <span class="info-icon">🕐</span>
                 <div class="info-content">
                   <strong>Horarios</strong>
-                  <ul class="schedule-list">
-                    <li>
-                      <span><strong>Lunes a viernes:</strong></span>
-                      <span>07:00 a 20:00 hs</span>
-                    </li>
-                    <li>
-                      <span><strong>Sábados:</strong></span>
-                      <span>08:00 a 13:00 hs</span>
-                    </li>
-                    <li>
-                      <span><strong>Domingos:</strong></span>
-                      <span>16:00 a 20:00 hs <span class="badge-highlight">Guardia</span></span>
-                    </li>
-                  </ul>
+                  <div class="schedule-list" style="display: block;">
+                    <div class="aligned-row">
+                      <span class="aligned-label">Lunes a viernes:</span>
+                      <span class="aligned-value">07:00 a 20:00 hs</span>
+                    </div>
+                    <div class="aligned-row">
+                      <span class="aligned-label">Sábados:</span>
+                      <span class="aligned-value">08:00 a 13:00 hs</span>
+                    </div>
+                    <div class="aligned-row">
+                      <span class="aligned-label">Domingos:</span>
+                      <span class="aligned-value">16:00 a 20:00 hs<br><span class="badge-highlight" style="margin-top:4px; display:inline-block;">Guardia</span></span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -2057,13 +2306,6 @@
 
           <!-- Sede Lomas de Zamora -->
           <div class="location-card" id="a-4-2">
-            <div class="location-map">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d850.5117184028129!2d-58.408872921363944!3d-34.766670534992684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcd34074aed94d%3A0x28242c74a3b39c0f!2sPoliconsultorio%20IOMA%20Lomas%20(Diagnosticar)!5e1!3m2!1ses!2sus!4v1768842678957!5m2!1ses!2sus"
-                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-                title="Mapa de Sede Lomas de Zamora">
-              </iframe>
-            </div>
             <div class="location-info">
               <h4>Sede Lomas de Zamora</h4>
 
@@ -2079,74 +2321,24 @@
                 <span class="info-icon">🕐</span>
                 <div class="info-content">
                   <strong>Horarios</strong>
-                  <ul class="schedule-list">
-                    <li>
-                      <span><strong>Lunes a viernes:</strong></span>
-                      <span>08:00 a 17:00 hs</span>
-                    </li>
-                    <li>
-                      <span><strong>Sábados:</strong></span>
-                      <span>08:00 a 13:00 hs</span>
-                    </li>
-                    <li>
-                      <span><strong>Domingos:</strong></span>
-                      <span>Consultar disponibilidad</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Guardia Clínica Ambulatoria - Destacado -->
-              <div style="margin: 16px 0; padding: 14px 16px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border: 2px solid #4caf50; border-radius: 10px;">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                  <span style="font-size: 20px;">🏥</span>
-                  <strong style="color: #2e7d32; font-size: 16px;">Guardia clínica ambulatoria</strong>
-                </div>
-                <p style="margin: 0; color: #388e3c; font-weight: 500;">Demanda espontánea · Lunes a viernes de 08:00 a 17:00 hs.</p>
-              </div>
-
-              <!-- Especialidades en Lomas de Zamora -->
-              <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line);">
-                <strong style="display: block; margin-bottom: 12px; color: var(--brand); font-size: 15px;">Especialidades en Lomas de Zamora</strong>
-                <div style="display: grid; grid-template-columns: 1fr; gap: 6px; margin-bottom: 16px;">
-                  <style>
-                    @media (min-width: 480px) {
-                      .lomas-specialties { grid-template-columns: 1fr 1fr !important; }
-                    }
-                    .lomas-specialty-item {
-                      display: block;
-                      padding: 10px 14px;
-                      background: var(--card);
-                      border: 1px solid var(--line);
-                      border-radius: 8px;
-                      color: var(--ink);
-                      font-size: 13px;
-                      font-weight: 500;
-                      text-decoration: none;
-                      transition: all .2s ease;
-                    }
-                    .lomas-specialty-item:hover {
-                      background: var(--brand);
-                      border-color: var(--brand);
-                      color: #fff;
-                      text-decoration: none;
-                    }
-                  </style>
-                  <div class="lomas-specialties" style="display: grid; grid-template-columns: 1fr; gap: 6px;">
-                    <a href="turnos.html" class="lomas-specialty-item">Clínica médica, certificados y aptos físicos</a>
-                    <a href="turnos.html" class="lomas-specialty-item">Cardiología y estudios del corazón</a>
-                    <a href="turnos.html" class="lomas-specialty-item">Ortopedia y traumatología</a>
-                    <a href="turnos.html" class="lomas-specialty-item">Ecografías y ecodoppler</a>
-                    <a href="turnos.html" class="lomas-specialty-item">Oftalmología</a>
-                    <a href="turnos.html" class="lomas-specialty-item">Ginecología</a>
-                    <a href="turnos.html" class="lomas-specialty-item">Nutrición</a>
-                    <a href="turnos.html" class="lomas-specialty-item">Dermatología</a>
-                    <a href="turnos.html" class="lomas-specialty-item">Certificado médico</a>
-                    <a href="turnos.html" class="lomas-specialty-item">Videollamada</a>
+                  <div class="schedule-list" style="display: block;">
+                    <div class="aligned-row">
+                      <span class="aligned-label">Lunes a viernes:</span>
+                      <span class="aligned-value">08:00 a 17:00 hs</span>
+                    </div>
+                    <div class="aligned-row">
+                      <span class="aligned-label">Sábados:</span>
+                      <span class="aligned-value">08:00 a 13:00 hs</span>
+                    </div>
+                    <div class="aligned-row">
+                      <span class="aligned-label">Domingos:</span>
+                      <span class="aligned-value text-consultar">Consultar disponibilidad</span>
+                    </div>
                   </div>
                 </div>
-                <a href="#a-2-4" class="lomas-specialty-item" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-color: var(--brand); color: var(--brand); font-weight: 600;">Ver listado completo de servicios →</a>
               </div>
+
+
 
               <div class="info-item" style="margin-top: 16px;">
                 <span class="info-icon">ℹ️</span>
@@ -2181,9 +2373,12 @@
                     </svg>
                   </div>
                   <h4 itemprop="name">Centro Oftalmológico</h4>
-                  <p itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                    <span itemprop="streetAddress">Calle 15 A 4758</span>
-                  </p>
+                  <div class="info-content" style="margin-bottom: 20px;">
+                     <div class="aligned-row">
+                        <span class="aligned-label">Dirección:</span>
+                        <span class="aligned-value" itemprop="streetAddress">Calle 15 A 4758</span>
+                     </div>
+                  </div>
                   <div class="service-cta">
                     <a href="turnos.html#sacar-turno" class="btn btn-secondary">Solicitar turno</a>
                   </div>
@@ -2197,9 +2392,12 @@
                     </svg>
                   </div>
                   <h4 itemprop="name">Centro Cardiológico</h4>
-                  <p itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                    <span itemprop="streetAddress">Calle 15 4676</span>
-                  </p>
+                  <div class="info-content" style="margin-bottom: 20px;">
+                     <div class="aligned-row">
+                        <span class="aligned-label">Dirección:</span>
+                        <span class="aligned-value" itemprop="streetAddress">Calle 15 4676</span>
+                     </div>
+                  </div>
                   <div class="service-cta">
                     <a href="turnos.html#sacar-turno" class="btn btn-secondary">Solicitar turno</a>
                   </div>
@@ -2214,9 +2412,12 @@
                     </svg>
                   </div>
                   <h4 itemprop="name">Centro de Kinesiología</h4>
-                  <p itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                    <span itemprop="streetAddress">Calle 147 1386</span>
-                  </p>
+                  <div class="info-content" style="margin-bottom: 20px;">
+                     <div class="aligned-row">
+                        <span class="aligned-label">Dirección:</span>
+                        <span class="aligned-value" itemprop="streetAddress">Calle 147 1386</span>
+                     </div>
+                  </div>
                   <div class="service-cta">
                     <a href="turnos.html#sacar-turno" class="btn btn-secondary">Solicitar turno</a>
                   </div>
@@ -2231,33 +2432,39 @@
                     </svg>
                   </div>
                   <h4 itemprop="name">Centro Odontológico</h4>
-                  <p itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                    <span itemprop="streetAddress">Calle 147 1389</span>
-                  </p>
+                  <div class="info-content" style="margin-bottom: 20px;">
+                     <div class="aligned-row">
+                        <span class="aligned-label">Dirección:</span>
+                        <span class="aligned-value" itemprop="streetAddress">Calle 147 1389</span>
+                     </div>
+                  </div>
                   <div class="service-cta">
                     <a href="turnos.html#sacar-turno" class="btn btn-secondary">Solicitar turno</a>
                   </div>
                 </article>
 
                 <!-- Diagnosticar (Guardias) -->
-                <article class="service-card" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border: 2px solid #2196f3;" itemscope itemtype="https://schema.org/MedicalClinic">
+                <article class="service-card" itemscope itemtype="https://schema.org/MedicalClinic">
                   <div class="service-icon" style="background: #2196f3;">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                   </div>
-                  <h4 itemprop="name" style="color: #1565c0;">Diagnosticar (Guardias)</h4>
-                  <p style="color: #1976d2; margin-bottom: 8px;">Clínica Médica · Ecografía · Odontología · Traumatología</p>
-                  <p itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" style="margin-bottom: 12px;">
-                    <span itemprop="streetAddress">Lisandro de la Torre (esq. Calle 15)</span>
-                  </p>
+                  <h4 itemprop="name">Diagnosticar (Guardias)</h4>
+                  <p style="margin-bottom: 12px; font-size: 14px; color: var(--muted);">Clínica Médica · Ecografía · Odontología · Traumatología</p>
+                  <div class="info-content" style="margin-bottom: 20px;">
+                     <div class="aligned-row">
+                        <span class="aligned-label">Dirección:</span>
+                        <span class="aligned-value" itemprop="streetAddress">Lisandro de la Torre<br><span style="font-size:13px; color:var(--muted);">(esq. Calle 15)</span></span>
+                     </div>
+                  </div>
                   <div class="service-cta">
-                    <a href="turnos.html#sacar-turno" class="btn btn-primary">Solicitar turno</a>
+                    <a href="turnos.html#sacar-turno" class="btn btn-secondary">Solicitar turno</a>
                   </div>
                 </article>
 
                 <!-- Centro de la Mujer -->
-                <article class="service-card" style="background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%); border: 2px solid #e91e63;" itemscope itemtype="https://schema.org/MedicalClinic">
+                <article class="service-card" itemscope itemtype="https://schema.org/MedicalClinic">
                   <div class="service-icon" style="background: #e91e63;">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28">
                       <!-- Símbolo femenino - Centro de la Mujer -->
@@ -2265,15 +2472,18 @@
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 13v8M9 18h6"/>
                     </svg>
                   </div>
-                  <h4 itemprop="name" style="color: #880e4f;">Centro de la Mujer</h4>
-                  <p itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" style="color: #ad1457;">
-                    <span itemprop="streetAddress">Lisandro de la Torre 1688</span>
-                  </p>
-                  <p style="margin: 8px 0 12px; padding: 8px 12px; background: white; border-radius: 8px; font-size: var(--fs-small); color: #880e4f; font-weight: 500;">
+                  <h4 itemprop="name">Centro de la Mujer</h4>
+                  <div class="info-content" style="margin-bottom: 12px;">
+                     <div class="aligned-row">
+                        <span class="aligned-label">Dirección:</span>
+                        <span class="aligned-value" itemprop="streetAddress">Lisandro de la Torre 1688</span>
+                     </div>
+                  </div>
+                  <p style="margin: 8px 0 12px; padding: 8px 12px; background: #fce4ec; border-radius: 8px; font-size: var(--fs-small); color: #880e4f; font-weight: 500;">
                     📅 A partir del 1 de noviembre: Ginecología
                   </p>
                   <div class="service-cta">
-                    <a href="turnos.html#sacar-turno" class="btn btn-secondary" style="border-color: #e91e63; color: #e91e63;">Solicitar turno</a>
+                    <a href="turnos.html#sacar-turno" class="btn btn-secondary">Solicitar turno</a>
                   </div>
                 </article>
               </div>
@@ -2342,7 +2552,61 @@
                 <figcaption>Consultorio médico</figcaption>
               </figure>
             </div>
+
+          <!-- Secciones Movidas (Ex 1.2 y 1.3) -->
+          <div class="service-grid">
+            <!-- Demanda espontánea -->
+            <div class="service-card" id="a-1-2">
+              <div class="service-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" width="28" height="28">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+                </svg>
+              </div>
+              <h4>¿Qué es demanda espontánea?</h4>
+              <p>Consultas que pueden resolverse acercándote directamente a la guardia, sin turno previo.</p>
+
+              <ul class="service-features">
+                <li>Síntomas agudos pero estables</li>
+                <li>Dudas sobre indicaciones o resultados</li>
+                <li>Evaluación clínica rápida</li>
+              </ul>
+
+              <div
+                style="margin-top: 12px; padding: 10px; background: #fff3cd; border-left: 3px solid #ffc107; border-radius: 6px; font-size: var(--fs-small);">
+                <strong>⚠️ Síntomas graves:</strong> Ante dolor intenso en el pecho, dificultad para respirar marcada o
+                pérdida de conciencia, acudir al servicio de emergencias.
+              </div>
+            </div>
+
+            <!-- Cuándo sacar turno -->
+            <div class="service-card" id="a-1-3">
+              <div class="service-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" width="28" height="28">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                </svg>
+              </div>
+              <h4>Cuándo conviene sacar turno</h4>
+              <p>Para controles, estudios programados o consultas con especialista, lo ideal es coordinar un turno.</p>
+
+              <ul class="service-features">
+                <li>Controles médicos programados</li>
+                <li>Estudios por imágenes</li>
+                <li>Consultas con especialistas</li>
+              </ul>
+
+              <div class="service-cta">
+                <a href="turnos.html" class="btn btn-primary">
+                  Sacar turno online
+                </a>
+              </div>
+            </div>
           </div>
+          </div>
+
         </section>
 
         <!-- 5. Coberturas -->
@@ -2601,9 +2865,9 @@
 
               <div
                 style="background: var(--card); padding: 12px; border-radius: 8px; margin: 12px 0; border: 1px solid var(--line);">
-                <a href="tel:+5491139105195" target="_blank" rel="noopener"
+                <a href="tel:52567028" target="_blank" rel="noopener"
                   style="font-size: 18px; font-weight: 700; color: var(--brand); text-decoration: none; display: block; text-align: center;">
-                  3910-5195
+                  5256-7028
                 </a>
               </div>
 
@@ -2662,9 +2926,9 @@
 
               <div
                 style="background: var(--card); padding: 12px; border-radius: 8px; margin: 12px 0; border: 1px solid var(--line);">
-                <a href="mailto:info@diagnosticar.org"
+                <a href="mailto:diagnosticarinformes@gmail.com"
                   style="font-size: 16px; font-weight: 600; color: var(--brand); text-decoration: none; display: block; text-align: center; word-break: break-all;">
-                  info@diagnosticar.org
+                  diagnosticarinformes@gmail.com
                 </a>
               </div>
 
@@ -2690,16 +2954,16 @@
                 <p style="margin-bottom: 14px; color: #ef6c00;">Horarios habituales de atención telefónica y presencial.
                 </p>
 
-                <ul class="schedule-list" style="background: white; padding: 14px; border-radius: 10px; margin: 0;">
-                  <li>
-                    <span><strong>Lunes a viernes:</strong></span>
-                    <span style="color: #ff9800; font-weight: 600;">07:00 a 20:00 hs</span>
-                  </li>
-                  <li>
-                    <span><strong>Sábados:</strong></span>
-                    <span style="color: #ff9800; font-weight: 600;">08:00 a 13:00 hs</span>
-                  </li>
-                </ul>
+                <div class="schedule-list" style="background: white; padding: 14px; border-radius: 10px; margin: 0; display: block;">
+                  <div class="aligned-row">
+                    <span class="aligned-label">Lunes a viernes:</span>
+                    <span class="aligned-value highlight" style="color: #ef6c00;">07:00 a 20:00 hs</span>
+                  </div>
+                  <div class="aligned-row">
+                    <span class="aligned-label">Sábados:</span>
+                    <span class="aligned-value highlight" style="color: #ef6c00;">08:00 a 13:00 hs</span>
+                  </div>
+                </div>
 
                 <p style="margin: 12px 0 0; font-size: var(--fs-small); color: #e65100;">
                   💡 <strong>Fuera de estos horarios</strong>, el canal recomendado para consultas es WhatsApp.
@@ -3025,6 +3289,44 @@
     })();
   </script>
 
+  <!-- Modal Sede -->
+  <div id="modal-sede" class="sede-modal-overlay">
+    <div class="sede-modal-card">
+      <h3 class="sede-modal-title">Seleccioná tu sede</h3>
+      <p style="margin-bottom: 20px;">Elegí la sede para ver los horarios y servicios disponibles.</p>
+      <div style="display: grid; gap: 10px;">
+        <button onclick="elegirSede('Berazategui')" class="btn btn-primary" style="justify-content: center; cursor: pointer;">Sede Berazategui</button>
+        <button onclick="location.href='lomas.html'" class="btn btn-secondary" style="justify-content: center; cursor: pointer;">Sede Lomas de Zamora</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Logic Sede
+    function checkSede() {
+      const sede = localStorage.getItem('dx_sede');
+      if (!sede) {
+        document.getElementById('modal-sede').classList.add('active');
+        document.getElementById('sede-banner').style.display = 'none';
+      } else {
+        mostrarBanner(sede);
+      }
+    }
+    function elegirSede(sede) {
+      localStorage.setItem('dx_sede', sede);
+      document.getElementById('modal-sede').classList.remove('active');
+      window.location.reload();
+    }
+    function mostrarBanner(sede) {
+      const banner = document.getElementById('sede-banner');
+      banner.style.display = 'flex';
+      document.getElementById('sede-nombre-banner').innerText = 'Sede ' + sede;
+    }
+    function cambiarSede() {
+      document.getElementById('modal-sede').classList.add('active');
+    }
+    document.addEventListener("DOMContentLoaded", checkSede);
+  </script>
 </body>
 
 </html>
