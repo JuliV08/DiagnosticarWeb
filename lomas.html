@@ -275,7 +275,18 @@
       .btn-change-sede {
         margin: 0 auto;
       }
-    }    /* ============ Sticky Banner Sede ============ */
+    /* ============ Sticky Wrapper ============ */
+    .sticky-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+    }
+
+    /* Reset individual sticky to avoid conflicts */
+    header { position: static; z-index: auto; }
+
+    /* ============ Sticky Banner Sede ============ */
     .sede-banner {
       display: flex;
       background: #333;
@@ -283,8 +294,8 @@
       text-align: center;
       padding: 8px 16px;
       font-size: 14px;
-      position: sticky;
-      top: 0;
+      /* position: sticky; removed for wrapper */
+      /* top: 0; removed */
       z-index: 40;
       justify-content: center;
       align-items: center;
