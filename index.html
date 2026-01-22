@@ -3316,13 +3316,6 @@
     // Logic Sede
     function checkSede() {
       const sede = localStorage.getItem('dx_sede');
-      // Si viene de lomas.html (sede === 'lomas'), redirigir o mostrar modal
-      if (sede === 'lomas') {
-        // Usuario viene de Lomas, redirigir de vuelta
-        localStorage.removeItem('dx_sede');
-        window.location.href = 'lomas.html';
-        return;
-      }
       if (!sede) {
         document.getElementById('modal-sede').classList.add('active');
         document.getElementById('sede-banner').style.display = 'none';
