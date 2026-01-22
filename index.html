@@ -400,11 +400,21 @@
     @media (max-width:600px) {
       header .wrap {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+      }
+
+      .brand {
+        width: 100%;
+        text-align: center;
+      }
+
+      .brand-logo-link {
+        justify-content: center;
       }
 
       .cta-row {
-        justify-content: flex-start;
+        justify-content: center;
+        width: 100%;
       }
     }
 
@@ -1431,7 +1441,8 @@
       text-align: center;
       padding: 8px 16px;
       font-size: 14px;
-      position: relative; /* Scrolls away to avoid navbar conflict */
+      position: sticky;
+      top: 0;
       z-index: 1001;
       justify-content: center;
       align-items: center;
@@ -3305,11 +3316,18 @@
     // Logic Sede
     function checkSede() {
       const sede = localStorage.getItem('dx_sede');
+      // Si viene de lomas.html (sede === 'lomas'), redirigir o mostrar modal
+      if (sede === 'lomas') {
+        // Usuario viene de Lomas, redirigir de vuelta
+        localStorage.removeItem('dx_sede');
+        window.location.href = 'lomas.html';
+        return;
+      }
       if (!sede) {
         document.getElementById('modal-sede').classList.add('active');
         document.getElementById('sede-banner').style.display = 'none';
       } else {
-        mostrarBanner(sede);
+        mostrarBanner();
       }
     }
     function elegirSede(sede) {
@@ -3317,10 +3335,11 @@
       document.getElementById('modal-sede').classList.remove('active');
       window.location.reload();
     }
-    function mostrarBanner(sede) {
+    function mostrarBanner() {
+      // index.html SIEMPRE muestra "Sede Berazategui"
       const banner = document.getElementById('sede-banner');
       banner.style.display = 'flex';
-      document.getElementById('sede-nombre-banner').innerText = 'Sede ' + sede;
+      document.getElementById('sede-nombre-banner').innerText = 'Sede Berazategui';
     }
     function cambiarSede() {
       document.getElementById('modal-sede').classList.add('active');
