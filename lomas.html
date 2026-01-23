@@ -617,19 +617,6 @@
   </div>
 
   <div class="container">    
-    <!-- Hero CTA -->
-    <div class="cta-panel" style="margin-top: 20px; padding: 32px 24px; background:white; border-color:var(--line);">
-      <h1 style="margin-bottom: 8px;">Sacá tu turno en Lomas de Zamora</h1>
-      <p style="font-size: 18px; margin-bottom: 24px;">Coordiná tu consulta o estudio de forma rápida y sencilla.</p>
-      <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
-        <a href="turnos.html#sacar-turno" class="btn btn-primary" style="background: var(--brand); color: #fff; box-shadow: var(--shadow-md);">
-          Sacar turno online
-        </a>
-        <a href="https://api.whatsapp.com/send/?phone=5491123519307&text=Hola%2C%20quiero%20sacar%20turno%20en%20Lomas" target="_blank" rel="noopener" class="btn btn-wa" style="background:white; color:#25d366; border: 2px solid #25d366;">
-          Escribir por WhatsApp
-        </a>
-      </div>
-    </div>
     
     <!-- Main Info Block -->
     <section class="section-block">
@@ -815,6 +802,30 @@
       localStorage.removeItem('dx_sede');
       window.location.href = 'index.html';
     }
+  </script>
+  
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+  </style>
+  
+  <script>
+    function cambiarSede() {
+      // Redirigir directamente a index.html con animación
+      document.body.style.animation = 'fadeOut 0.3s ease-out';
+      setTimeout(() => { window.location.href = 'index.html'; }, 300);
+    }
+    
+    window.addEventListener('DOMContentLoaded', function() {
+      // Animación de entrada
+      document.body.style.animation = 'fadeIn 0.3s ease-in';
+    });
   </script>
 </body>
 </html>
