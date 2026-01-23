@@ -813,9 +813,13 @@
   
   <script>
     function cambiarSede() {
+      console.log('DEBUG LOMAS - cambiarSede() llamada');
       // Redirigir directamente a index.html con animación y parámetro
       document.body.style.animation = 'fadeOut 0.3s ease-out';
-      setTimeout(() => { window.location.href = 'index.html?from=internal'; }, 300);
+      setTimeout(() => { 
+        console.log('DEBUG LOMAS - redirigiendo a index.html?from=internal');
+        window.location.href = 'index.html?from=internal'; 
+      }, 300);
     }
     
     window.addEventListener('DOMContentLoaded', function() {
