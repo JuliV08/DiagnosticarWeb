@@ -1449,7 +1449,7 @@
     }
     .sede-banner {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       background: #333;
       color: #fff;
       text-align: center;
@@ -1460,7 +1460,13 @@
       z-index: 40;
       justify-content: center;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
+    }
+    @media (max-width: 640px) {
+      .sede-banner {
+        flex-direction: column;
+        gap: 8px;
+      }
     }
     .btn-change-sede {
       background: rgba(255,255,255,0.2);
