@@ -3476,9 +3476,10 @@
       // Animación de entrada
       document.body.style.animation = 'fadeIn 0.3s ease-in';
       
-      const sedeSeleccionada = localStorage.getItem('dx_sede');
-      if (!sedeSeleccionada) {
-        // Solo mostrar modal en primera visita
+      // Solo mostrar modal si es PRIMERA VISITA de la sesión (no navegación interna)
+      const yaVisito = sessionStorage.getItem('dx_visited');
+      if (!yaVisito) {
+        sessionStorage.setItem('dx_visited', 'true');
         document.getElementById('welcomeModal').classList.remove('hidden');
       }
     });
