@@ -813,17 +813,22 @@
   
   <script>
     function cambiarSede() {
-      // Redirigir directamente a index.html con animación
+      // Redirigir directamente a index.html con animación y parámetro
       document.body.style.animation = 'fadeOut 0.3s ease-out';
-      setTimeout(() => { window.location.href = 'index.html'; }, 300);
+      setTimeout(() => { window.location.href = 'index.html?from=internal'; }, 300);
     }
     
     window.addEventListener('DOMContentLoaded', function() {
       // Animación de entrada
       document.body.style.animation = 'fadeIn 0.3s ease-in';
       
-      // Marcar que ya visitó el sitio en esta sesión
+      // Marcar visita y limpiar URL si viene de navegación interna
       sessionStorage.setItem('dx_visited', 'true');
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('from') === 'internal') {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
     });
   </script>
 </body>

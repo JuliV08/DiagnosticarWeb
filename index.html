@@ -3468,19 +3468,26 @@
     function cambiarSede() {
       // Redirigir directamente a la otra sede con animación
       document.body.style.animation = 'fadeOut 0.3s ease-out';
-      // index.html siempre redirige a lomas.html
-      setTimeout(() => { window.location.href = 'lomas.html'; }, 300);
+      // Añadir parámetro para indicar navegación interna
+      setTimeout(() => { window.location.href = 'lomas.html?from=internal'; }, 300);
     }
     
     window.addEventListener('DOMContentLoaded', function() {
       // Animación de entrada
       document.body.style.animation = 'fadeIn 0.3s ease-in';
       
-      // Solo mostrar modal si es PRIMERA VISITA de la sesión (no navegación interna)
-      const yaVisito = sessionStorage.getItem('dx_visited');
-      if (!yaVisito) {
+      // Solo mostrar modal si NO viene de navegación interna
+      const urlParams = new URLSearchParams(window.location.search);
+      const esNavegacionInterna = urlParams.get('from') === 'internal';
+      
+      if (!esNavegacionInterna && !sessionStorage.getItem('dx_visited')) {
         sessionStorage.setItem('dx_visited', 'true');
         document.getElementById('welcomeModal').classList.remove('hidden');
+      }
+      
+      // Limpiar URL sin recargar página
+      if (esNavegacionInterna) {
+        window.history.replaceState({}, document.title, window.location.pathname);
       }
     });
   </script>
