@@ -3479,10 +3479,18 @@
       // Solo mostrar modal si NO viene de navegación interna
       const urlParams = new URLSearchParams(window.location.search);
       const esNavegacionInterna = urlParams.get('from') === 'internal';
+      const yaVisito = sessionStorage.getItem('dx_visited');
       
-      if (!esNavegacionInterna && !sessionStorage.getItem('dx_visited')) {
+      console.log('DEBUG - URL:', window.location.href);
+      console.log('DEBUG - esNavegacionInterna:', esNavegacionInterna);
+      console.log('DEBUG - yaVisito:', yaVisito);
+      
+      if (!esNavegacionInterna && !yaVisito) {
+        console.log('DEBUG - MOSTRANDO MODAL');
         sessionStorage.setItem('dx_visited', 'true');
         document.getElementById('welcomeModal').classList.remove('hidden');
+      } else {
+        console.log('DEBUG - NO mostrando modal (interno:', esNavegacionInterna, ', visitado:', yaVisito, ')');
       }
       
       // Limpiar URL sin recargar página
