@@ -1448,7 +1448,8 @@
       z-index: auto;
     }
     .sede-banner {
-      display: flex; /* Changed from none to test */
+      display: flex;
+      flex-direction: column;
       background: #333;
       color: #fff;
       text-align: center;
@@ -1459,7 +1460,7 @@
       z-index: 40;
       justify-content: center;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
     .btn-change-sede {
       background: rgba(255,255,255,0.2);
@@ -3432,7 +3433,7 @@
     }
   </style>
 
-  <div id="welcomeModal" class="welcome-modal">
+  <div id="welcomeModal" class="welcome-modal hidden">
     <div class="welcome-modal-content">
       <h2 id="welcomeTitle">¡Gracias por visitarnos!</h2>
       <p id="welcomeText">¿Sos paciente de Berazategui o Lomas de Zamora?</p>
