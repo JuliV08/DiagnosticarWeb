@@ -825,6 +825,9 @@
     window.addEventListener('DOMContentLoaded', function() {
       // Animación de entrada
       document.body.style.animation = 'fadeIn 0.3s ease-in';
+      
+      // Marcar que ya visitó el sitio en esta sesión
+      sessionStorage.setItem('dx_visited', 'true');
     });
   </script>
 </body>
