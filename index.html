@@ -3403,10 +3403,6 @@
       banner.style.display = 'flex';
       document.getElementById('sede-nombre-banner').innerText = 'Sede Berazategui';
     }
-    function cambiarSede() {
-      document.getElementById('modal-sede').classList.add('active');
-    }
-    document.addEventListener("DOMContentLoaded", checkSede);
   </script>
 
   <style>
@@ -3432,8 +3428,8 @@
 
   <div id="welcomeModal" class="welcome-modal">
     <div class="welcome-modal-content">
-      <h2>¡Gracias por visitarnos!</h2>
-      <p>¿Sos paciente de Berazategui o Lomas de Zamora?</p>
+      <h2 id="welcomeTitle">¡Gracias por visitarnos!</h2>
+      <p id="welcomeText">¿Sos paciente de Berazategui o Lomas de Zamora?</p>
       <div class="welcome-buttons">
         <button class="btn-sede" onclick="selectSede('berazategui')">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -3460,7 +3456,15 @@
       if (sede === 'lomas') {
         window.location.href = 'lomas.html';
       }
+      // Si es Berazategui, simplemente cierra el modal (ya estamos en index.html)
     }
+    
+    function cambiarSede() {
+      document.getElementById('welcomeTitle').textContent = 'Cambio de sede';
+      document.getElementById('welcomeText').textContent = 'Elegí la sede para ver los horarios y servicios disponibles.';
+      document.getElementById('welcomeModal').classList.remove('hidden');
+    }
+    
     window.addEventListener('DOMContentLoaded', function() {
       const sedeSeleccionada = localStorage.getItem('dx_sede');
       if (!sedeSeleccionada) {
