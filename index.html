@@ -3424,12 +3424,18 @@
     .btn-sede span { position: relative; z-index: 1; }
     .btn-sede-secondary { background: linear-gradient(135deg, #e91e63, #c2185b); box-shadow: 0 4px 16px rgba(233, 30, 99, 0.3); }
     .btn-sede-secondary:hover { box-shadow: 0 8px 24px rgba(233, 30, 99, 0.4); }
+    
+    /* Animaciones de transición de página */
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
   </style>
 
   <div id="welcomeModal" class="welcome-modal">
     <div class="welcome-modal-content">
-      <h2 id="welcomeTitle">Cambio de sede</h2>
-      <p id="welcomeText">Elegí la sede para ver los horarios y servicios disponibles.</p>
+      <h2 id="welcomeTitle">¡Gracias por visitarnos!</h2>
+      <p id="welcomeText">¿Sos paciente de Berazategui o Lomas de Zamora?</p>
       <div class="welcome-buttons">
         <button class="btn-sede" onclick="selectSede('berazategui')">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -3454,22 +3460,25 @@
       localStorage.setItem('dx_sede', sede);
       document.getElementById('welcomeModal').classList.add('hidden');
       if (sede === 'lomas') {
-        window.location.href = 'lomas.html';
+        document.body.style.animation = 'fadeOut 0.3s ease-out';
+        setTimeout(() => { window.location.href = 'lomas.html'; }, 300);
       }
-      // Si es Berazategui, simplemente cierra el modal (ya estamos en index.html)
     }
     
     function cambiarSede() {
-      document.getElementById('welcomeTitle').textContent = 'Cambio de sede';
-      document.getElementById('welcomeText').textContent = 'Elegí la sede para ver los horarios y servicios disponibles.';
-      document.getElementById('welcomeModal').classList.remove('hidden');
+      // Redirigir directamente a la otra sede con animación
+      document.body.style.animation = 'fadeOut 0.3s ease-out';
+      // index.html siempre redirige a lomas.html
+      setTimeout(() => { window.location.href = 'lomas.html'; }, 300);
     }
     
     window.addEventListener('DOMContentLoaded', function() {
+      // Animación de entrada
+      document.body.style.animation = 'fadeIn 0.3s ease-in';
+      
       const sedeSeleccionada = localStorage.getItem('dx_sede');
       if (!sedeSeleccionada) {
-        document.getElementById('welcomeTitle').textContent = '¡Gracias por visitarnos!';
-        document.getElementById('welcomeText').textContent = '¿Sos paciente de Berazategui o Lomas de Zamora?';
+        // Solo mostrar modal en primera visita
         document.getElementById('welcomeModal').classList.remove('hidden');
       }
     });
