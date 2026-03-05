@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Política de Privacidad | Diagnosticar</title>
+    <link rel="icon" type="image/avif" href="assets/logoCompleto.avif">
+    <meta name="description"
+        content="Política de Privacidad y Protección de Datos de Pacientes en Diagnosticar Medical Center.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============ Tokens ============ */
+        :root {
+            --ink: #0b1620;
+            --muted: #6b7b8c;
+            --brand: #0b3d91;
+            --line: #e6eaf2;
+            --card: #f7f9fc;
+            --bg: #ffffff;
+            --radius: 14px;
+            --pad: 16px;
+            --headerH: 72px;
+            --tap: 48px;
+            --fs-body: clamp(15px, 1.6vw, 17px);
+            --fs-h2: clamp(18px, 2.4vw, 22px);
+            --fs-h3: clamp(16px, 2.0vw, 18px);
+            --fs-small: clamp(12px, 1.4vw, 13px);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            font-size: var(--fs-body);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        /* ============ Header ============ */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: linear-gradient(120deg, var(--brand), #072c6a);
+            color: #fff;
+            border-bottom: 1px solid #002b6b;
+        }
+
+        header .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px var(--pad);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+
+        .brand-logo-link {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .brand-logo {
+            display: block;
+            max-height: 48px;
+            width: auto;
+            height: auto;
+        }
+
+        .page-title-band {
+            background: #f3f6ff;
+            border-bottom: 1px solid #dbe5ff;
+        }
+
+        .page-title-band-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px var(--pad);
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: clamp(20px, 3vw, 32px);
+            font-weight: 600;
+            line-height: 1.2;
+            color: #05163d;
+            text-align: center;
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: var(--tap);
+            padding: 0 18px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform .08s ease, box-shadow .08s ease, background .15s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .18);
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid #bcd1ff;
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            color: var(--brand);
+            border-color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #e9efff;
+            text-decoration: none;
+        }
+
+        .btn-wa {
+            background: #25d366;
+            color: #ffffff;
+            border-color: #1da955;
+        }
+
+        .btn-wa:hover {
+            background: #1da955;
+            text-decoration: none;
+        }
+
+        .btn-wa-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            background: #ffffff;
+            color: #25d366;
+            font-size: 14px;
+            margin-right: 6px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width:600px) {
+            header .wrap {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cta-row {
+                justify-content: flex-start;
+            }
+        }
+
+        /* ============ Content ============ */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px var(--pad);
+            flex: 1;
+        }
+
+        .content-box {
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-box h1 {
+            font-size: clamp(24px, 4vw, 32px);
+            color: var(--brand);
+            margin: 0 0 12px;
+        }
+
+        .content-box h2 {
+            font-size: var(--fs-h2);
+            color: var(--brand);
+            margin: 24px 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eef2fa;
+        }
+
+        .content-box h3 {
+            font-size: var(--fs-h3);
+            color: var(--ink);
+            margin: 16px 0 8px 0;
+        }
+
+        .content-box p {
+            margin: 0 0 16px 0;
+            color: #334155;
+        }
+
+        .content-box ul {
+            margin: 0 0 16px 24px;
+            color: #334155;
+        }
+
+        .content-box li {
+            margin-bottom: 8px;
+        }
+
+        .meta {
+            color: var(--muted);
+            font-size: var(--fs-small);
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        /* ============ Footer ============ */
+        .site-footer {
+            background: #0b1620;
+            color: #94a3b8;
+            padding: 40px var(--pad) 24px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .site-footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .site-footer-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .site-footer-links a {
+            color: #cbd5e1;
+            font-size: var(--fs-small);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .site-footer-links a:hover {
+            color: #ffffff;
+        }
+
+        .site-footer-copy {
+            font-size: 12px;
+            margin-top: 16px;
+            border-top: 1px solid #1e293b;
+            padding-top: 16px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="inicio" style="position: absolute; top: 0;"></div>
+
+    <header id="top">
+        <div class="wrap">
+            <div class="brand">
+                <a class="brand-logo-link" href="index.html" aria-label="Ir al inicio de la página">
+                    <img src="assets/logoCompleto.avif" alt="Diagnosticar — Guardia, especialidades y diagnóstico"
+                        class="brand-logo">
+                </a>
+            </div>
+            <div class="cta-row">
+                <a class="btn btn-wa"
+                    href="https://api.whatsapp.com/send/?phone=5491136424161&text&type=phone_number&app_absent=0"
+                    target="_blank" rel="noopener">
+                    <span class="btn-wa-icon">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                        </svg>
+                    </span>
+                    WhatsApp
+                </a>
+                <a class="btn btn-primary" href="index.html">
+                    Volver a inicio
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content-box">
+            <h1>Política de Privacidad y Protección de Datos de Pacientes</h1>
+            <p class="meta">Diagnosticar Medical Center — Última actualización: 5 de marzo de 2026</p>
+
+            <h2>1. Compromiso institucional</h2>
+            <p>En Diagnosticar Medical Center asumimos el compromiso de proteger la confidencialidad, integridad y
+                seguridad de la información personal y médica de nuestros pacientes.</p>
+            <p>El tratamiento de datos personales se realiza conforme a la Ley Nº 25.326 de Protección de Datos
+                Personales de la República Argentina, sus normas reglamentarias y las buenas prácticas internacionales
+                en gestión de información sanitaria.</p>
+            <p>Toda información vinculada a la salud de nuestros pacientes es considerada dato sensible y se gestiona
+                bajo estrictos protocolos de confidencialidad.</p>
+
+            <h2>2. Información que recopilamos</h2>
+            <p>En el marco de la prestación de servicios médicos, Diagnosticar puede recopilar y procesar los siguientes
+                datos:</p>
+
+            <h3>Datos personales</h3>
+            <ul>
+                <li>Nombre y apellido</li>
+                <li>Documento de identidad</li>
+                <li>Fecha de nacimiento</li>
+                <li>Domicilio</li>
+                <li>Teléfono y correo electrónico</li>
+                <li>Datos de cobertura médica u obra social</li>
+            </ul>
+
+            <h3>Datos médicos y clínicos</h3>
+            <ul>
+                <li>Historia clínica</li>
+                <li>Estudios de diagnóstico</li>
+                <li>Informes médicos</li>
+                <li>Resultados de laboratorio o imágenes</li>
+                <li>Antecedentes médicos relevantes</li>
+            </ul>
+            <p>Estos datos son necesarios para garantizar una correcta prestación de los servicios de salud.</p>
+
+            <h2>3. Finalidad del tratamiento de datos</h2>
+            <p>La información recopilada se utiliza exclusivamente para:</p>
+            <ul>
+                <li>Identificación y registro del paciente</li>
+                <li>Gestión administrativa de turnos y servicios médicos</li>
+                <li>Elaboración y almacenamiento de historias clínicas</li>
+                <li>Diagnóstico, tratamiento y seguimiento médico</li>
+                <li>Facturación a obras sociales o sistemas de cobertura médica</li>
+                <li>Cumplimiento de obligaciones legales y regulatorias</li>
+            </ul>
+            <p>Diagnosticar no utiliza datos de pacientes para fines comerciales ajenos a la prestación sanitaria.</p>
+
+            <h2>4. Confidencialidad de la información médica</h2>
+            <p>Toda la información clínica está protegida por el secreto médico y solo puede ser accesible por:</p>
+            <ul>
+                <li>Profesionales de la salud involucrados en la atención del paciente</li>
+                <li>Personal administrativo autorizado para tareas operativas</li>
+                <li>Autoridades sanitarias cuando la legislación vigente lo requiera</li>
+            </ul>
+            <p>Todos los colaboradores de Diagnosticar están sujetos a acuerdos de confidencialidad y protocolos
+                internos de manejo de información sensible.</p>
+
+            <h2>5. Almacenamiento y seguridad de los datos</h2>
+            <p>Diagnosticar implementa medidas técnicas y organizativas para garantizar la seguridad de la información,
+                incluyendo:</p>
+            <ul>
+                <li>Sistemas informáticos protegidos</li>
+                <li>Control de accesos a la información médica</li>
+                <li>Protocolos de seguridad digital</li>
+                <li>Copias de respaldo seguras</li>
+                <li>Protección contra accesos no autorizados</li>
+            </ul>
+            <p>El objetivo es preservar la integridad, disponibilidad y confidencialidad de los datos de los pacientes.
+            </p>
+
+            <h2>6. Compartición de información</h2>
+            <p>Los datos personales y médicos no serán vendidos ni transferidos a terceros con fines comerciales.</p>
+            <p>Podrán ser compartidos únicamente en los siguientes casos:</p>
+            <ul>
+                <li>Con profesionales médicos involucrados en el tratamiento</li>
+                <li>Con obras sociales o entidades de cobertura médica para procesos administrativos</li>
+                <li>Con laboratorios o centros médicos asociados cuando sea necesario para la atención</li>
+                <li>Cuando lo requieran autoridades sanitarias o judiciales conforme a la ley</li>
+            </ul>
+
+            <h2>7. Derechos de los pacientes</h2>
+            <p>De acuerdo con la Ley 25.326, los pacientes tienen derecho a:</p>
+            <ul>
+                <li>Acceder a sus datos personales</li>
+                <li>Solicitar la rectificación de información incorrecta</li>
+                <li>Solicitar la actualización de sus datos</li>
+                <li>Solicitar la supresión de datos cuando corresponda</li>
+            </ul>
+            <p>Los pacientes pueden ejercer estos derechos mediante solicitud formal dirigida a Diagnosticar.</p>
+            <p>La Agencia de Acceso a la Información Pública, órgano de control de la Ley 25.326, tiene la atribución de
+                atender denuncias y reclamos relacionados con el incumplimiento de las normas sobre protección de datos
+                personales.</p>
+
+            <h2>8. Conservación de la información médica</h2>
+            <p>Las historias clínicas y registros médicos serán conservados durante el plazo que establezca la normativa
+                sanitaria vigente, garantizando en todo momento su confidencialidad y seguridad.</p>
+
+            <h2>9. Actualizaciones de esta política</h2>
+            <p>Diagnosticar podrá actualizar esta política de privacidad cuando sea necesario para adaptarla a cambios
+                normativos, tecnológicos o operativos.</p>
+            <p>La versión vigente estará siempre disponible en nuestros canales oficiales.</p>
+
+            <h2>10. Contacto</h2>
+            <p>Para consultas relacionadas con la protección de datos personales o el acceso a su información médica,
+                los pacientes pueden comunicarse a través de los canales oficiales de Diagnosticar Medical Center.</p>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div class="site-footer-links">
+                <a href="privacy.html">Política de Privacidad</a>
+            </div>
+            <div class="site-footer-copy">
+                &copy; 2026 Diagnosticar Medical Center. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
