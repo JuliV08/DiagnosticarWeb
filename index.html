@@ -1732,6 +1732,97 @@
       </div>
     </div>
 
+    <!-- Highlight: Telemedicina / Videollamadas -->
+    <style>
+      .telemed-banner-wrapper {
+        padding: 24px var(--pad) 0;
+      }
+      .telemed-banner {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        border: 2px solid #22c55e;
+        border-radius: 16px;
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
+      }
+      .telemed-icon {
+        background: #16a34a;
+        color: white;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .telemed-content {
+        flex: 1;
+      }
+      .telemed-content h3 {
+        color: #14532d;
+        margin: 0 0 6px;
+        font-size: 20px;
+      }
+      .telemed-content p {
+        color: #166534;
+        margin: 0;
+        font-size: 15.5px;
+        line-height: 1.4;
+      }
+      .telemed-cta .btn {
+        background: #16a34a;
+        border-color: #16a34a;
+        color: #fff;
+        padding: 12px 24px;
+        font-size: 15px;
+        white-space: nowrap;
+        box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3);
+      }
+      .telemed-cta .btn:hover {
+        background: #15803d;
+        border-color: #15803d;
+      }
+      @media (max-width: 768px) {
+        .telemed-banner {
+          flex-direction: column;
+          text-align: center;
+          padding: 20px 16px;
+          gap: 16px;
+        }
+        .telemed-icon {
+          margin: 0 auto;
+        }
+        .telemed-cta {
+          width: 100%;
+        }
+        .telemed-cta .btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+    <div class="telemed-banner-wrapper">
+      <div class="telemed-banner">
+        <div class="telemed-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="30" height="30">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
+          </svg>
+        </div>
+        <div class="telemed-content">
+          <h3>Videollamadas médicas</h3>
+          <p>Obtené <strong>recetas</strong>, <strong>certificados</strong> y hacé tus consultas médicas <strong>sin moverte de tu casa</strong>. Rápido, fácil y seguro.</p>
+        </div>
+        <div class="telemed-cta">
+          <a href="turnos.html#sacar-turno" class="btn">Sacar turno online</a>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
       <div class="stack">
 
